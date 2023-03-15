@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { convertToSlug } from 'seeder/seeds'
 import { PrismaService } from 'src/prisma.service'
 import { CategoryDto } from './dto/category.dto'
@@ -23,15 +23,24 @@ export class CategoryService {
 		return category
 	}
 
-	async updateCategory(id: number, dto: CategoryDto) {
-		return this.prisma.category.update({
+	async bySlug(slug: string) {
+		const category = await this.prisma.category.findUnique({
 			where: {
-				id,
+				slug,
 			},
-			data: {
-				name: dto.name,
-				slug: convertToSlug(dto.name),
-			},
+			select: returnCategoryObject,
+		})
+
+		if (!category) {
+			throw new NotFoundException('Category not found')
+		}
+
+		return category
+	}
+
+	async getAll() {
+		return this.prisma.category.findMany({
+			select: returnCategoryObject,
 		})
 	}
 
@@ -40,6 +49,18 @@ export class CategoryService {
 			data: {
 				name: '',
 				slug: '',
+			},
+		})
+	}
+
+	async updateCategory(id: number, dto: CategoryDto) {
+		return this.prisma.category.update({
+			where: {
+				id,
+			},
+			data: {
+				name: dto.name,
+				slug: convertToSlug(dto.name),
 			},
 		})
 	}

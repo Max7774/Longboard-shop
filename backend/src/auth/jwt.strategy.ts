@@ -13,16 +13,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	) {
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			ignoreExpiration: false,
+			ignoreExpiration: true,
 			secretOrKey: configService.get('JWT_SECRET'),
 		})
 	}
 
-	async validate({ id }: Pick<User, 'id'>): Promise<User> {
-		const user = this.prisma.user.findUnique({ where: { id: +id } })
-		if (!user) {
-			throw new UnauthorizedException('Oh no')
-		}
-		return user
+	async validate({ id }: Pick<User, 'id'>) {
+		return this.prisma.user.findUnique({ where: { id: +id } })
+		// if (!user) {
+		// 	throw new UnauthorizedException('Oh no')
+		// }
+		// return user
 	}
 }

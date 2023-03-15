@@ -1065,7 +1065,7 @@
 
 "@types/passport-jwt@^3.0.8":
   version "3.0.8"
-  resolved "https://registry.npmjs.org/@types/passport-jwt/-/passport-jwt-3.0.8.tgz"
+  resolved "https://registry.yarnpkg.com/@types/passport-jwt/-/passport-jwt-3.0.8.tgz#c8a95bf7d8f330f2560f1b3d07605e23ac01469a"
   integrity sha512-VKJZDJUAHFhPHHYvxdqFcc5vlDht8Q2pL1/ePvKAgqRThDaCc84lSYOTQmnx3+JIkDlN+2KfhFhXIzlcVT+Pcw==
   dependencies:
     "@types/express" "*"
