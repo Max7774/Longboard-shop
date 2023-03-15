@@ -3,7 +3,7 @@ import { getAccessToken, removeFromStorage } from '../services/auth/auth.helper'
 import { AuthService } from '../services/auth/auth.service'
 import { errorCatch, getContentType } from './api.helper'
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: process.env.SERVER_URL,
     headers: getContentType()
 })
