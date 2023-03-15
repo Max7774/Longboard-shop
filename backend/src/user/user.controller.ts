@@ -6,9 +6,11 @@ import {
 	Param,
 	Patch,
 	Put,
+	UseGuards,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
 import { UserDto } from './dto/user.dto'
@@ -19,7 +21,7 @@ export class UserController {
 	constructor(private readonly userService: UserService) {}
 
 	@Get('profile')
-	@Auth()
+	@UseGuards(AuthGuard('jwt'))
 	async getProfile(@CurrentUser('id') id: number) {
 		return this.userService.byId(id)
 	}

@@ -4,7 +4,7 @@ export class ReviewDto {
 	@IsNumber()
 	@Min(1)
 	@Max(5)
-	reting: number
+	rating: number
 
 	@IsString()
 	text: string

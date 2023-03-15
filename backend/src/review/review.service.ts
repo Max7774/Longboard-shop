@@ -65,23 +65,25 @@ export class ReviewService {
 		})
 	}
 
-	async updateReview(id: number, dto: ReviewDto) {
-		return this.prisma.review.update({
-			where: {
-				id,
-			},
-			data: {
-				name: dto.name,
-				slug: convertToSlug(dto.name),
-			},
-		})
-	}
+	// async updateReview(id: number, dto: ReviewDto) {
+	// 	return this.prisma.review.update({
+	// 		where: {
+	// 			id,
+	// 		},
+	// 		data: {
+	// 			...dto,
+	// 		},
+	// 	})
+	// }
 
-	async deleteReview(id: number) {
-		return this.prisma.review.delete({
-			where: {
-				id,
-			},
-		})
+	async getAverageValueByProductId(productId: number) {
+		return this.prisma.review
+			.aggregate({
+				where: {
+					productId,
+				},
+				_avg: { rating: true },
+			})
+			.then(data => data._avg)
 	}
 }
