@@ -24,6 +24,8 @@ export function convertToSlug(string: string) {
 		.replace(/-+$/, '') // Trim - from end of text
 }
 
+//! need to regenerate seeds in future
+
 export function getRandomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
