@@ -1,5 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { convertToSlug } from 'seeder/seeds'
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 import { ReviewDto } from './dto/review.dto'
 import { returnReviewObject } from './return-review.object'
