@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text&display=swap');
+
 body {
-	@apply text-base text-black;
+	@apply bg-bg-color text-base text-black;
+	font-family: 'Golos Text', sans-serif;
 }
 
 .disabled {

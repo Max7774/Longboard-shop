@@ -1,9 +1,7 @@
 import { NextPage } from 'next'
 import Auth from '../src/components/screens/auth/Auth'
 
-interface Props {}
-
-const AuthPage: NextPage<Props> = ({}) => {
+const AuthPage: NextPage = () => {
   return <Auth  />
 }
 

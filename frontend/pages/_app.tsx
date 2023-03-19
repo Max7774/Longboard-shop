@@ -1,4 +1,4 @@
-import '@/assets/styles/globals.css'
+import '@/assets/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux';
