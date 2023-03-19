@@ -1,5 +1,5 @@
-import { ICategory } from "./category.interface"
-import { IReview } from "./review.interface"
+import { ICategory } from './category.interface'
+import { IReview } from './review.interface'
 
 export interface IProduct {
 	images: string[]
@@ -9,10 +9,19 @@ export interface IProduct {
 	price: number
 	createdAt: string
 	slug: string
-    category: ICategory
-    reviews: IReview[]
+	category: ICategory
+	reviews: IReview[]
 }
 
 export interface IProductDetails {
-    product: IProduct
+	product: IProduct
+}
+
+export type TypeProducts = {
+	products: IProduct[]
+}
+
+export type TypePaginationProducts = {
+	length: number
+	products: IProduct[]
 }

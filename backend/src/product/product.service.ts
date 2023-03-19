@@ -62,6 +62,7 @@ export class ProductService {
 			orderBy: prismaSort,
 			skip,
 			take: perPage,
+			select: productReturnObject,
 		})
 
 		return {
@@ -143,7 +144,11 @@ export class ProductService {
 	async createProduct() {
 		const product = await this.prisma.product.create({
 			data: {
+				id: 2,
 				description: '',
+				images: [],
+				categoryId: 2,
+				userId: 1,
 				name: '',
 				price: 0,
 				slug: '',

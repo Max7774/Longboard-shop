@@ -15,7 +15,7 @@ const Productitem: FC<{ product: IProduct }> = ({ product }) => {
 				<Image
 					width={300}
 					height={300}
-					src={product.images[0]}
+					src={product?.images[0]}
 					alt={product.name}
 				/>
 			</div>
