@@ -1,34 +1,53 @@
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { FC } from 'react'
+
+import { convertPrice } from '@/utils/convertPrice'
 
 import AddToCartButton from './AddToCartButton'
 import FavouriteButton from './FavouriteButton'
 import ProductRating from './ProductRating'
 import { IProduct } from '@/../src/types/product.interface'
 
+const DynamicFavouriteButton = dynamic(() => import('./FavouriteButton'), {
+	ssr: false,
+})
+
 const Productitem: FC<{ product: IProduct }> = ({ product }) => {
 	return (
 		<div>
-			<div>
-				<FavouriteButton productId={product.id} />
-				<AddToCartButton product={product} />
+			<div className="bg-white rounded-xl relative overflow-hidden">
+				<div className="absolute top-2 right-3 z-10">
+					<DynamicFavouriteButton productId={product.id} />
+					<AddToCartButton product={product} />
+				</div>
 				{/* <Image
 					width={300}
 					height={300}
 					src={product?.images[0]}
 					alt={product.name}
 				/> */}
-				<img
-					width={300}
-					height={300}
-					src={product?.images[0]}
-					alt={product.name}
-				/>
+				<Link href={`/product/${product.category.slug}`}>
+					<img
+						width={300}
+						height={300}
+						src={product?.images[0]}
+						alt={product.name}
+					/>
+				</Link>
 			</div>
-			<h3>{product.name}</h3>
-			<div>{product.category.name}</div>
+			<Link href={`/product/${product.category.slug}`}>
+				<h3 className="mt-2 font-semibold">{product.name}</h3>
+			</Link>
+			<Link
+				href={`/category/${product.category.slug}`}
+				className="text-aqua text-xs mb-2"
+			>
+				{product.category.name}
+			</Link>
 			<ProductRating product={product} />
-			<div>{product.price}</div>
+			<div className="text-xl font-semibold">{convertPrice(product.price)}</div>
 		</div>
 	)
 }

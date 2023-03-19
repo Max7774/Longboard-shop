@@ -13,14 +13,14 @@ import { IProduct } from '@/../src/types/product.interface'
 const FavouriteButton: FC<{ productId: number }> = ({ productId }) => {
 	const { profile } = useProfile()
 
-	const { invalidateQueries } = useQueryClient()
+	const queryClient = useQueryClient()
 
 	const { mutate } = useMutation(
 		['toggle favourite'],
 		() => UserService.toggleFavourite(productId),
 		{
 			onSuccess() {
-				invalidateQueries(['get profile'])
+				queryClient.invalidateQueries(['get profile'])
 			},
 		},
 	)
@@ -33,7 +33,7 @@ const FavouriteButton: FC<{ productId: number }> = ({ productId }) => {
 
 	return (
 		<div>
-			<button onClick={() => mutate()}>
+			<button onClick={() => mutate()} className="text-primary">
 				{isExists ? <AiFillHeart /> : <AiOutlineHeart />}
 			</button>
 		</div>

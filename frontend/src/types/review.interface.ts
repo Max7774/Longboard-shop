@@ -1,9 +1,9 @@
-import { IUser } from "./user.interface"
+import { IUser } from './user.interface'
 
 export interface IReview {
-    id: number
-    user: IUser
-    createdAt: string
-    text: string
-    rating: string
+	id: number
+	user: IUser
+	createdAt: string
+	text: string
+	rating: number
 }

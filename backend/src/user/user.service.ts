@@ -71,6 +71,8 @@ export class UserService {
 
 		const isExists = user.favourites.some(product => product.id === productId)
 
+		console.log('========-', isExists)
+
 		await this.prisma.user.update({
 			where: {
 				id: user.id,
