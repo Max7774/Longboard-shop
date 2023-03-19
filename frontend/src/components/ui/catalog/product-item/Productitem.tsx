@@ -18,6 +18,12 @@ const Productitem: FC<{ product: IProduct }> = ({ product }) => {
 					src={product?.images[0]}
 					alt={product.name}
 				/> */}
+				<img
+					width={300}
+					height={300}
+					src={product?.images[0]}
+					alt={product.name}
+				/>
 			</div>
 			<h3>{product.name}</h3>
 			<div>{product.category.name}</div>
