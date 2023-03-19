@@ -13,19 +13,19 @@ import { IProduct } from '@/../src/types/product.interface'
 const FavouriteButton: FC<{ productId: number }> = ({ productId }) => {
 	const { profile } = useProfile()
 
-	if (!profile) return null
-
 	const { invalidateQueries } = useQueryClient()
 
 	const { mutate } = useMutation(
 		['toggle favourite'],
-		() => UserService.toffleFavourite(productId),
+		() => UserService.toggleFavourite(productId),
 		{
 			onSuccess() {
 				invalidateQueries(['get profile'])
 			},
 		},
 	)
+
+	if (!profile) return null
 
 	const isExists = profile.favourites.some(
 		favourite => favourite.id === productId,

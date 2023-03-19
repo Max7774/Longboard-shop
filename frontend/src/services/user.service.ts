@@ -27,7 +27,7 @@ export const UserService = {
 		})
 	},
 
-	async toffleFavourite(productId: string | number) {
+	async toggleFavourite(productId: string | number) {
 		return await instance<IUser>({
 			url: `${USERS}/profile/favourites/${productId}`,
 			method: 'PATCH',
