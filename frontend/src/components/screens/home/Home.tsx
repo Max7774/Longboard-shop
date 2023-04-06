@@ -8,7 +8,7 @@ import { useActions } from '@/hooks/useAction'
 import { useAuth } from '@/hooks/useAuth'
 
 import Meta from '../../ui/Meta'
-import Heading from '../../ui/button/Heading'
+import Heading from '../../ui/layout/Heading'
 
 // import Catalog from '../../ui/catalog/Catalog'
 import {

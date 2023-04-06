@@ -6,6 +6,7 @@ import Layout from '@/ui/layout/Layout'
 import { NextPageAuth } from '@/providers/auth-provider/auth-page.types'
 
 import { useProfile } from '@/hooks/useProfile'
+import Catalog from '@/ui/catalog/Catalog'
 
 const FavouritesPage: NextPageAuth = () => {
 	const { profile } = useProfile()

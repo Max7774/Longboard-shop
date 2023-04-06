@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import Loader from '../Loader'
 import { Button } from '../button/Button'
-import Heading from '../button/Heading'
+import Heading from '../layout/Heading'
 
 import SortDropdown from './SortDropdown'
 import Productitem from './product-item/Productitem'

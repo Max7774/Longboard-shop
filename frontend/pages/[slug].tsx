@@ -9,6 +9,7 @@ import { IProduct } from '@/types/product.interface'
 
 import { CategoryService } from '@/services/category.service'
 import { ProductService } from '@/services/product/product.service'
+import Catalog from '@/ui/catalog/Catalog'
 
 const CategoryPage: NextPage<{ products: IProduct[]; category: ICategory }> = ({
 	products,

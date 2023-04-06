@@ -4,7 +4,7 @@ import type { SubmitHandler } from 'react-hook-form'
 
 import Meta from '../../ui/Meta'
 import { Button } from '../../ui/button/Button'
-import Heading from '../../ui/button/Heading'
+import Heading from '../../ui/layout/Heading'
 import Field from '../../ui/input/Field'
 
 import { useAuthRedirect } from './useAuthRedirect'
