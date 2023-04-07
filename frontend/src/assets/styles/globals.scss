@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text&display=swap');
+
+body {
+	@apply bg-bg-color text-base text-black;
+	font-family: 'Golos Text', sans-serif;
+}
+
+.disabled {
+	pointer-events: none;
+	cursor: default;
+	text-decoration: none;
+	opacity: 0.2 !important;
+}
+
+.open-menu {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.close-menu {
+	opacity: 0;
+	transform: scale(0.8);
+}
