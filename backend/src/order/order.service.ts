@@ -27,21 +27,21 @@ export class OrderService {
 		})
 	}
 
-	async placeOrder(dto: OrderDto, userId: number) {
-		const order = await this.prisma.order.create({
-			data: {
-				status: dto.status,
-				items: {
-					create: dto.items,
-				},
-			},
-			user: {
-				connect: {
-					id: userId,
-				},
-			},
-		})
+	// async placeOrder(dto: OrderDto, userId: number) {
+	// 	const order = await this.prisma.order.create({
+	// 		data: {
+	// 			status: dto.status,
+	// 			items: {
+	// 				create: dto.items,
+	// 			},
+	// 		},
+	// 		user: {
+	// 			connect: {
+	// 				id: userId,
+	// 			},
+	// 		},
+	// 	})
 
-		return order
-	}
+	// 	return order
+	// }
 }
