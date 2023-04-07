@@ -19,7 +19,7 @@ const SortDropdown: FC<ISortDropdown> = ({ sortType, setSortType }) => {
 					Object.keys(EnumProductsSort) as Array<keyof typeof EnumProductsSort>
 				).map(key => {
 					return (
-						<option key={key} value={EnumProductsSort[key]}>
+						<option key={EnumProductsSort[key]} value={EnumProductsSort[key]}>
 							{EnumProductsSort[key]}
 						</option>
 					)

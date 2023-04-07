@@ -23,7 +23,7 @@ const Home: FC<TypePaginationProducts> = ({ products, length }) => {
 	return (
 		<Meta title="Home">
 			<Layout>
-				{!!user && <button onClick={() => logout()}>Logout</button>}
+				{/* {!!user && <button onClick={() => logout()}>Logout</button>} */}
 				<CatalogPagination
 					title="Freshed products"
 					data={{ products, length }}
