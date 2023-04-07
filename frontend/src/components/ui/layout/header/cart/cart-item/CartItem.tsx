@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { FC } from 'react'
 
 import { ICartItem } from '@/types/cart.interface'
@@ -14,12 +15,20 @@ interface IItem {
 const CartItem: FC<IItem> = ({ item }) => {
 	return (
 		<div>
-			<Image
+			{/* <Image
 				src={item.product.images[0]}
 				width={100}
 				height={100}
 				alt={item.product.name}
-			/>
+			/> */}
+			<Link href={`/product/${item.product.category.slug}`}>
+				<img
+					width={100}
+					height={100}
+					src={item.product?.images[0]}
+					alt={item.product.name}
+				/>
+			</Link>
 			<div>
 				<div>{item.product.name}</div>
 				<div>{convertPrice(item.product.price)}</div>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 import { RiShoppingCartLine } from 'react-icons/ri'
 
+import { Button } from '@/ui/button/Button'
 import SquareButton from '@/ui/button/SquareButton'
 
 import { useCart } from '@/hooks/useCart'
@@ -13,7 +14,6 @@ import { convertPrice } from '@/utils/convertPrice'
 
 import CartItem from './cart-item/CartItem'
 import { PaymentService } from '@/services/payment.service'
-import { Button } from '@/ui/button/Button'
 
 const Cart: FC = () => {
 	const { isShow, setIsShow, ref } = useOutside(false)
@@ -51,15 +51,15 @@ const Cart: FC = () => {
 						<div className="font-light">Cart is empty!</div>
 					)}
 				</div>
-				{/* <div className={styles.footer}>
+				<div>
 					<div>Total: </div>
 					<div>{convertPrice(total)}</div>
-				</div> */}
-        <div>
-          <Button variant='white' size='sm' className='btn-link mt-5 mb-2'>
-            Place order
-          </Button>
-        </div>
+				</div>
+				<div>
+					<Button variant="white" size="sm" className="btn-link mt-5 mb-2">
+						Place order
+					</Button>
+				</div>
 			</div>
 		</div>
 	)
