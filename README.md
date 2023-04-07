@@ -19,6 +19,6 @@ In "backend" directory
 You need to create seeds to see all potential
 **In Seeders Package**
 
-## Preview
+<!-- ## Preview
 
-[Img](telegram-cloud-photo-size-2-5296610578200121214-y.jpg)
+[Img](telegram-cloud-photo-size-2-5296610578200121214-y.jpg) -->
