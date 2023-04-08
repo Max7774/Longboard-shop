@@ -150,13 +150,13 @@ async function createProducts(q: number) {
 	console.log(`Created products`)
 }
 
-async function main() {
-	console.log('Start seeding...')
-	await createProduct(1)
-}
+// async function main() {
+// 	console.log('Start seeding...')
+// 	await createProduct(1)
+// }
 
-main()
-	.catch(e => console.error(e))
-	.finally(async () => {
-		await prisma.$disconnect()
-	})
+// main()
+// 	.catch(e => console.error(e))
+// 	.finally(async () => {
+// 		await prisma.$disconnect()
+// 	})

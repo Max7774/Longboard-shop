@@ -15,7 +15,7 @@ const CartActions: FC<{ item: ICartItem }> = ({ item }) => {
 
 	return (
 		<div className="mt-3">
-			<div className="flex items-center gap-3">
+			<div className="flex items-center gap-2">
 				<button
 					onClick={() => changeQuantity({ id: item.id, type: 'minus' })}
 					disabled={quantity === 1}
@@ -23,6 +23,12 @@ const CartActions: FC<{ item: ICartItem }> = ({ item }) => {
 					<FiMinus fontSize={13} />
 				</button>
 				<input
+					style={{
+						borderRadius: '5px',
+						display: 'flex',
+						padding: '5px',
+						justifyContent: 'center',
+					}}
 					disabled
 					readOnly
 					value={quantity}

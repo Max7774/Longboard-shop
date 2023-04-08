@@ -23,6 +23,7 @@ const CartItem: FC<IItem> = ({ item }) => {
 			/> */}
 			<Link href={`/product/${item.product.category.slug}`}>
 				<img
+					style={{ borderRadius: '10px' }}
 					width={100}
 					height={100}
 					src={item.product?.images[0]}
@@ -32,7 +33,9 @@ const CartItem: FC<IItem> = ({ item }) => {
 			<div>
 				<div>{item.product.name}</div>
 				<div>{convertPrice(item.product.price)}</div>
-				<CartActions item={item} />
+				<div style={{ marginBottom: '10px' }}>
+					<CartActions item={item} />
+				</div>
 			</div>
 		</div>
 	)

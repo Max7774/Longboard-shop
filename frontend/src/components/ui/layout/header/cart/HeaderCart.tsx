@@ -55,7 +55,7 @@ const Cart: FC = () => {
 					<div>Total: </div>
 					<div>{convertPrice(total)}</div>
 				</div>
-				<div>
+				<div style={{ zIndex: 'unset' }}>
 					<Button variant="white" size="sm" className="btn-link mt-5 mb-2">
 						Place order
 					</Button>

@@ -31,7 +31,7 @@ const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 		() =>
 			ProductService.getAll({
 				page,
-				perPage: 4,
+				perPage: 8,
 				sort: sortType,
 			}),
 		{
@@ -54,7 +54,7 @@ const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 						))}
 					</div>
 					<div className="text-center mt-16">
-						{Array.from({ length: response.length / 4 }).map((_, index) => {
+						{Array.from({ length: response.length / 6 }).map((_, index) => {
 							const pageNumber = index + 1
 							return (
 								<Button

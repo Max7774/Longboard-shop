@@ -27,8 +27,8 @@ const Sidebar: FC = () => {
 
 	return (
 		<aside
-			className="bg-secondary flrx flrx-col justify-between"
-			style={{ height: 'calc(100vh - 91px' }}
+			className="bg-secondary flex flex-col justify-between"
+			style={{ height: 'calc(150vh - 91px)' }}
 		>
 			<div>
 				{isLoading ? (

@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth'
 
 import Meta from '../../ui/Meta'
 import Heading from '../../ui/layout/Heading'
+import Auth from '../auth/Auth'
 
 // import Catalog from '../../ui/catalog/Catalog'
 import {
@@ -22,13 +23,17 @@ const Home: FC<TypePaginationProducts> = ({ products, length }) => {
 	const { logout } = useActions()
 	return (
 		<Meta title="Home">
-			<Layout>
-				{/* {!!user && <button onClick={() => logout()}>Logout</button>} */}
-				<CatalogPagination
-					title="Freshed products"
-					data={{ products, length }}
-				/>
-			</Layout>
+			{!!user ? (
+				<Layout>
+					{/* {!!user && <button onClick={() => logout()}>Logout</button>} */}
+					<CatalogPagination
+						title="Freshed products"
+						data={{ products, length }}
+					/>
+				</Layout>
+			) : (
+				<Auth />
+			)}
 		</Meta>
 	)
 }
