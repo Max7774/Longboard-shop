@@ -30,6 +30,8 @@ export function getRandomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
+//! --------------------------------------------------------------------------
+
 // const createUserFunction = (): User => ({
 // 	id: 2,
 // 	createdAt: new Date(),
@@ -81,22 +83,29 @@ export function getRandomNumber(min: number, max: number) {
 // 	productId: getRandomNumber(1, 18),
 // })
 
+//! --------------------------------------------------------------------------
+
 const createProduct = async (q: number) => {
 	const products: Product[] = []
 
 	for (let i = 0; i < q; i += 1) {
-		const productName = faker.commerce.productName()
-		const categoryName = faker.commerce.department()
+		const productName = 'Certified Sweatsaver Helmet'
+		const categoryName = 'Protection'
+		const description =
+			'Triple Eight has released the Certified Sweatsaver helmet so you can focus without worrying about the safety of your head. The protective properties are high because the outer shell is made of ABS, a material that has undergone extensive testing. Weight wont be an issue as it features a lightweight Expanded Poly Styrene (EPS) inner shell that absorbs shock very effectively and lasts a long time. Soft and comfortable contact between your head and helmet is ensured thanks to the foam padding.'
+		const price = 100
+		const images = [
+			'https://cdn.skatepro.com/product/440/triple-eight-certified-sweatsaver-skate-helmet-sr.jpg',
+		]
+		const text = 'Good helmet for longboarding'
 
 		const product = await prisma.product.create({
 			data: {
 				name: productName,
 				slug: convertToSlug(productName),
-				description: faker.commerce.productDescription(),
-				price: +faker.commerce.price(10, 999, 0),
-				images: Array.from({ length: getRandomNumber(2, 6) }).map(() =>
-					faker.image.imageUrl(),
-				),
+				description,
+				price,
+				images,
 				category: {
 					create: {
 						name: categoryName,
@@ -107,7 +116,7 @@ const createProduct = async (q: number) => {
 					create: [
 						{
 							rating: faker.datatype.number({ min: 1, max: 5 }),
-							text: faker.lorem.paragraph(),
+							text,
 							user: {
 								connect: {
 									id: 1,
@@ -116,7 +125,7 @@ const createProduct = async (q: number) => {
 						},
 						{
 							rating: faker.datatype.number({ min: 1, max: 5 }),
-							text: faker.lorem.paragraph(),
+							text,
 							user: {
 								connect: {
 									id: 1,
@@ -132,23 +141,25 @@ const createProduct = async (q: number) => {
 	console.log(`Created ${products.length} products!`)
 }
 
-async function createProducts(q: number) {
-	// for (let i = 22; i < q; i++) {
-	// 	await prisma.review.create({
-	// 		data: reviewCreateFunction(i),
-	// 	})
-	// }
-	// await prisma.category.create({
-	// 	data: categoryCreateFunction(),
-	// })
-	// await prisma.product.create({
-	// 	data: productsCreateFunction(),
-	// })
-	// await prisma.user.create({
-	// 	data: createUserFunction(),
-	// })
-	console.log(`Created products`)
-}
+//! --------------------------------------------------------------------------
+
+// async function createProducts(q: number) {
+// 	// for (let i = 22; i < q; i++) {
+// 	// 	await prisma.review.create({
+// 	// 		data: reviewCreateFunction(i),
+// 	// 	})
+// 	// }
+// 	// await prisma.category.create({
+// 	// 	data: categoryCreateFunction(),
+// 	// })
+// 	// await prisma.product.create({
+// 	// 	data: productsCreateFunction(),
+// 	// })
+// 	// await prisma.user.create({
+// 	// 	data: createUserFunction(),
+// 	// })
+// 	console.log(`Created products`)
+// }
 
 // async function main() {
 // 	console.log('Start seeding...')

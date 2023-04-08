@@ -6,6 +6,8 @@ import { ICartItem } from '@/types/cart.interface'
 
 import { convertPrice } from '@/utils/convertPrice'
 
+import styles from '../cart-item/Cart.module.scss'
+
 import CartActions from './cart-actions/CartActions'
 
 interface IItem {
@@ -14,7 +16,7 @@ interface IItem {
 
 const CartItem: FC<IItem> = ({ item }) => {
 	return (
-		<div>
+		<div className={styles.item}>
 			{/* <Image
 				src={item.product.images[0]}
 				width={100}
@@ -31,11 +33,9 @@ const CartItem: FC<IItem> = ({ item }) => {
 				/>
 			</Link>
 			<div>
-				<div>{item.product.name}</div>
-				<div>{convertPrice(item.product.price)}</div>
-				<div style={{ marginBottom: '10px' }}>
-					<CartActions item={item} />
-				</div>
+				<div className={styles.name}>{item.product.name}</div>
+				<div className={styles.price}>{convertPrice(item.product.price)}</div>
+				<CartActions item={item} />
 			</div>
 		</div>
 	)

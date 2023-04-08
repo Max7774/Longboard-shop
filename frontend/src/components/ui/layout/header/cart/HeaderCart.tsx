@@ -12,6 +12,7 @@ import { useOutside } from '@/hooks/useOutside'
 
 import { convertPrice } from '@/utils/convertPrice'
 
+import styles from './cart-item/Cart.module.scss'
 import CartItem from './cart-item/CartItem'
 import { PaymentService } from '@/services/payment.service'
 
@@ -44,18 +45,18 @@ const Cart: FC = () => {
 				)}
 			>
 				<div className="font-normal text-lg mb-5">My cart</div>
-				<div>
+				<div className={styles.cart}>
 					{items.length ? (
 						items.map(item => <CartItem item={item} key={item.id} />)
 					) : (
 						<div className="font-light">Cart is empty!</div>
 					)}
 				</div>
-				<div>
+				<div className={styles.footer}>
 					<div>Total: </div>
 					<div>{convertPrice(total)}</div>
 				</div>
-				<div style={{ zIndex: 'unset' }}>
+				<div className="text-center">
 					<Button variant="white" size="sm" className="btn-link mt-5 mb-2">
 						Place order
 					</Button>
