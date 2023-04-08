@@ -22,11 +22,11 @@ export class OrderController {
 		return this.orderService.getAll(userId)
 	}
 
-	// @UsePipes(new ValidationPipe())
-	// @HttpCode(200)
-	// @Post()
-	// @Auth()
-	// placeOrder(@Body() dto: OrderDto, @CurrentUser('id') userId: number) {
-	// 	return this.orderService.placeOrder(dto, userId)
-	// }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Post()
+	@Auth()
+	placeOrder(@Body() dto: OrderDto, @CurrentUser('id') userId: number) {
+		return this.orderService.placeOrder(dto, userId)
+	}
 }
