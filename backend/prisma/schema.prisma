@@ -11,11 +11,15 @@ model User {
   id         Int       @id @default(autoincrement())
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
+
   email      String    @unique
   password   String
+
   name       String    @unique
   avatarPath String    @default("/uploads/default-avatar.png") @map("avatar_path")
+
   phone      String    @default("")
+
   orders     Order[]
   favourites Product[]
   reviews    Review[]
@@ -31,10 +35,10 @@ model Product {
   price       Int
   images      String[]
   categoryId  Int?        @map("category_id")
-  userId      Int         @map("user_id")
+  userId      Int?         @map("user_id")
   orderItems  OrderItem[]
   category    Category?   @relation(fields: [categoryId], references: [id])
-  user        User        @relation(fields: [userId], references: [id])
+  user        User?        @relation(fields: [userId], references: [id])
   reviews     Review[]
 }
 

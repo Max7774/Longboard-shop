@@ -81,6 +81,57 @@ export function getRandomNumber(min: number, max: number) {
 // 	productId: getRandomNumber(1, 18),
 // })
 
+const createProduct = async (q: number) => {
+	const products: Product[] = []
+
+	for (let i = 0; i < q; i += 1) {
+		const productName = faker.commerce.productName()
+		const categoryName = faker.commerce.department()
+
+		const product = await prisma.product.create({
+			data: {
+				name: productName,
+				slug: convertToSlug(productName),
+				description: faker.commerce.productDescription(),
+				price: +faker.commerce.price(10, 999, 0),
+				images: Array.from({ length: getRandomNumber(2, 6) }).map(() =>
+					faker.image.imageUrl(),
+				),
+				category: {
+					create: {
+						name: categoryName,
+						slug: convertToSlug(categoryName),
+					},
+				},
+				reviews: {
+					create: [
+						{
+							rating: faker.datatype.number({ min: 1, max: 5 }),
+							text: faker.lorem.paragraph(),
+							user: {
+								connect: {
+									id: 1,
+								},
+							},
+						},
+						{
+							rating: faker.datatype.number({ min: 1, max: 5 }),
+							text: faker.lorem.paragraph(),
+							user: {
+								connect: {
+									id: 1,
+								},
+							},
+						},
+					],
+				},
+			},
+		})
+		products.push(product)
+	}
+	console.log(`Created ${products.length} products!`)
+}
+
 async function createProducts(q: number) {
 	// for (let i = 22; i < q; i++) {
 	// 	await prisma.review.create({
@@ -101,7 +152,7 @@ async function createProducts(q: number) {
 
 async function main() {
 	console.log('Start seeding...')
-	await createProducts(12)
+	await createProduct(1)
 }
 
 main()
