@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { FC } from 'react'
 
 import Loader from '../Loader'
@@ -25,8 +26,10 @@ const Catalog: FC<ICatalog> = ({
 
 	return (
 		<section>
+			<Link href={'/'}>
+				<div className="mb-2">{'<- Back'}</div>
+			</Link>
 			{title && <Heading className="mb-5">{title}</Heading>}
-			{/* {isPagination && < />} */}
 			{products.length ? (
 				<>
 					<div className="grid grid-cols-4 gap-10">

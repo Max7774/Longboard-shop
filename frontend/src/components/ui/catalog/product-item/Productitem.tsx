@@ -30,8 +30,9 @@ const Productitem: FC<{ product: IProduct }> = ({ product }) => {
 				/> */}
 				<Link href={`/product/${product.category.slug}`}>
 					<img
-						width={300}
-						height={300}
+						style={{ borderRadius: '10px', width: '300px', height: '300px' }}
+						// width={300}
+						// height={300}
 						src={product?.images[0]}
 						alt={product.name}
 					/>

@@ -23,15 +23,15 @@ const CartItem: FC<IItem> = ({ item }) => {
 				height={100}
 				alt={item.product.name}
 			/> */}
-			<Link href={`/product/${item.product.category.slug}`}>
-				<img
-					style={{ borderRadius: '10px' }}
-					width={100}
-					height={100}
-					src={item.product?.images[0]}
-					alt={item.product.name}
-				/>
-			</Link>
+			{/* <Link href={`/product/${item.product.category.slug}`}> */}
+			<img
+				style={{ borderRadius: '10px', width: '100px', height: '100px' }}
+				// width={100}
+				// height={100}
+				src={item.product?.images[0]}
+				alt={item.product.name}
+			/>
+			{/* </Link> */}
 			<div>
 				<div className={styles.name}>{item.product.name}</div>
 				<div className={styles.price}>{convertPrice(item.product.price)}</div>

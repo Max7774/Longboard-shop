@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
 
 import Meta from '@/ui/Meta'
 import Heading from '@/ui/layout/Heading'
@@ -20,6 +21,9 @@ const MyOrdersPage: NextPageAuth = () => {
 	return (
 		<Meta title="My Orders">
 			<Layout>
+				<Link href={'/'}>
+					<div className="mb-2">{'<- Back'}</div>
+				</Link>
 				<Heading>My orders</Heading>
 
 				<section>
