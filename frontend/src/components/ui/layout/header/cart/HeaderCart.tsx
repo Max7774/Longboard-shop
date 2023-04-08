@@ -7,6 +7,7 @@ import { RiShoppingCartLine } from 'react-icons/ri'
 import { Button } from '@/ui/button/Button'
 import SquareButton from '@/ui/button/SquareButton'
 
+import { useActions } from '@/hooks/useAction'
 import { useCart } from '@/hooks/useCart'
 import { useOutside } from '@/hooks/useOutside'
 
@@ -14,6 +15,7 @@ import { convertPrice } from '@/utils/convertPrice'
 
 import styles from './cart-item/Cart.module.scss'
 import CartItem from './cart-item/CartItem'
+import { OrderService } from '@/services/order.service'
 import { PaymentService } from '@/services/payment.service'
 
 const Cart: FC = () => {
@@ -21,13 +23,26 @@ const Cart: FC = () => {
 
 	const { items, total } = useCart()
 
-	// const { push } = useRouter()
+	const { reset } = useActions()
 
-	// const { mutate } = useMutation(['create payment'], () => PaymentService.createPayment(total), {
-	//   onSuccess(data) {
-	//     push(data.confirmation.confirmation_url)
-	//   }
-	// })
+	const { push } = useRouter()
+
+	const { mutate } = useMutation(
+		['create order and payment'],
+		() =>
+			OrderService.place({
+				items: items.map(item => ({
+					price: item.price,
+					quantity: item.quantity,
+					productId: item.product.id,
+				})),
+			}),
+		{
+			onSuccess({ data }) {
+				push(data.confirmation.confirmation_url).then(() => reset())
+			},
+		},
+	)
 
 	return (
 		<div className="relative" ref={ref}>
@@ -57,7 +72,12 @@ const Cart: FC = () => {
 					<div>{convertPrice(total)}</div>
 				</div>
 				<div className="text-center">
-					<Button variant="white" size="sm" className="btn-link mt-5 mb-2">
+					<Button
+						variant="white"
+						size="sm"
+						className="btn-link mt-5 mb-2"
+						onClick={() => mutate()}
+					>
 						Place order
 					</Button>
 				</div>

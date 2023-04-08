@@ -71,6 +71,7 @@ model Order {
   userId    Int                 @map("user_id")
   user      User                @relation(fields: [userId], references: [id])
   items     OrderItem[]
+  total Int
 }
 
 model OrderItem {
