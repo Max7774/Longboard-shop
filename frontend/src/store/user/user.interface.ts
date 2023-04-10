@@ -1,4 +1,4 @@
-import { IUser } from "../../types/user.interface"
+import { IUser } from '../../types/user.interface'
 
 export interface IUserState {
 	email: string
@@ -12,6 +12,12 @@ export interface ITokens {
 export interface IInitialState {
 	user: IUserState | null
 	isLoading: boolean
+}
+
+export interface IEmailRegPassword {
+	email: string
+	name: string
+	password: string
 }
 
 export interface IEmailPassword {

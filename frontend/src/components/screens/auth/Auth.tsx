@@ -4,14 +4,17 @@ import type { SubmitHandler } from 'react-hook-form'
 
 import Meta from '../../ui/Meta'
 import { Button } from '../../ui/button/Button'
-import Heading from '../../ui/layout/Heading'
 import Field from '../../ui/input/Field'
+import Heading from '../../ui/layout/Heading'
 
 import { useAuthRedirect } from './useAuthRedirect'
 import { validEmail } from './valid-email'
 import { useActions } from '@/../src/hooks/useAction'
 import { useAuth } from '@/../src/hooks/useAuth'
-import { IEmailPassword } from '@/../src/store/user/user.interface'
+import {
+	IEmailPassword,
+	IEmailRegPassword,
+} from '@/../src/store/user/user.interface'
 
 interface Props {}
 
@@ -29,12 +32,12 @@ const Auth: FC = () => {
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm<IEmailPassword>({ mode: 'onChange' })
+	} = useForm<IEmailRegPassword>({ mode: 'onChange' })
 
-	const onSubmit: SubmitHandler<IEmailPassword> = data => {
+	const onSubmit: SubmitHandler<IEmailRegPassword> = data => {
 		if (type === 'login') {
 			login(data)
-		} else {
+		} else if (type === 'register') {
 			register(data)
 		}
 		reset()
@@ -59,6 +62,19 @@ const Auth: FC = () => {
 						placeholder="Email"
 						error={errors.email?.message}
 					/>
+					{type === 'register' ? (
+						<Field
+							{...formRegister('name', {
+								minLength: {
+									value: 1,
+									message: 'Min length should more 6 symbols',
+								},
+							})}
+							type="name"
+							placeholder="Name"
+							error={errors.name?.message}
+						/>
+					) : null}
 					<Field
 						{...formRegister('password', {
 							required: 'Password is required',

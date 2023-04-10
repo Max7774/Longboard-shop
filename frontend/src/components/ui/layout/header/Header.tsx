@@ -19,13 +19,6 @@ const Header: FC = () => {
 			}}
 		>
 			<Link href="/">
-				{/* <Image
-					priority
-					width={180}
-					height={37}
-					src="https://www.creativefabrica.com/wp-content/uploads/2022/09/07/Skate-shop-emblem-vector-illustration-S-Graphics-37963343-1.jpg"
-					alt=""
-				/> */}
 				<img
 					style={{ borderRadius: '20px' }}
 					width={100}

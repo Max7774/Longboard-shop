@@ -1,8 +1,12 @@
-import { IsEmail, IsString, MinLength } from 'class-validator'
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator'
 
 export class AuthDto {
 	@IsEmail()
 	email: string
+
+	@IsOptional()
+	@IsString()
+	name: string
 
 	@MinLength(6, {
 		message: 'Password must be at least 6 characters long',
@@ -10,4 +14,3 @@ export class AuthDto {
 	@IsString()
 	password: string
 }
- 
