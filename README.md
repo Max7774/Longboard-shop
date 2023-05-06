@@ -6,7 +6,7 @@ Longboard shop for Russian segment
 
 In "frontend" and "backend" directories
 
-### `yarn add`
+### `yarn`
 
 In "frontend" directory
 
