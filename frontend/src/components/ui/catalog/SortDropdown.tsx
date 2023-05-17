@@ -9,7 +9,7 @@ interface ISortDropdown {
 
 const SortDropdown: FC<ISortDropdown> = ({ sortType, setSortType }) => {
 	return (
-		<div className="text-right mb-5">
+		<div className="text-left mb-5">
 			<select
 				value={sortType}
 				onChange={e => setSortType(e.target.value as any)}

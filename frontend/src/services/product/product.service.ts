@@ -41,11 +41,14 @@ export const ProductService = {
 		})
 	},
 
-	async createProduct() {
-		return await instance<IProduct>({
-			url: PRODUCTS,
+	async createProduct(data: ProductType) {
+		const response = await axiosClassic<IProduct>({
+			url: `${PRODUCTS}/create`,
 			method: 'POST',
+			data,
 		})
+
+		return response
 	},
 
 	async updateProduct(id: string | number, data: ProductType) {

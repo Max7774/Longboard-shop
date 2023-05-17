@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { convertToSlug } from 'seeder/seeds'
+import { convertToSlug } from '../../seeder/seeds'
 import { PrismaService } from 'src/prisma.service'
 import { CategoryDto } from './dto/category.dto'
 import { returnCategoryObject } from './return-category.object'
@@ -44,11 +44,11 @@ export class CategoryService {
 		})
 	}
 
-	async createCategory() {
+	async createCategory(dto: CategoryDto) {
 		return this.prisma.category.create({
 			data: {
-				name: '',
-				slug: '',
+				name: dto.name,
+				slug: convertToSlug(dto.name),
 			},
 		})
 	}

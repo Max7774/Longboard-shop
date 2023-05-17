@@ -4,10 +4,7 @@ import { forwardRef } from 'react'
 import { IField } from './field.interface'
 
 const Field = forwardRef<HTMLInputElement, IField>(
-	(
-		{ placeholder, error, className, type = 'text', style, Icon, ...rest },
-		ref,
-	) => {
+	({ placeholder, error, className, type, style, Icon, ...rest }, ref) => {
 		return (
 			<div>
 				<label className={cn('mb-4', className)} style={style}>

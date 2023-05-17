@@ -43,10 +43,9 @@ export class CategoryController {
 	}
 
 	@HttpCode(200)
-	@Auth()
 	@Post()
-	async createCategory() {
-		return this.categoryService.createCategory()
+	async createCategory(@Body() dto: CategoryDto) {
+		return this.categoryService.createCategory(dto)
 	}
 
 	@HttpCode(200)

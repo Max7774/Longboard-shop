@@ -1,7 +1,8 @@
+import axios from 'axios'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { convertPrice } from '@/utils/convertPrice'
 
@@ -14,7 +15,34 @@ const DynamicFavouriteButton = dynamic(() => import('./FavouriteButton'), {
 	ssr: false,
 })
 
+type Photo = {
+	id: string
+	url: string
+	filename: string
+	originalname: string
+	mimetype: string
+	size: number
+	path: string
+	productId: number
+}
+
 const Productitem: FC<{ product: IProduct }> = ({ product }) => {
+	const [image, setImage] = useState<Photo[]>([])
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch(
+				`http://localhost:4200/api/file-upload/${product.id}`,
+			)
+			const data = await response.json()
+			setImage(data)
+		}
+
+		fetchData()
+	}, [])
+
+	// console.log(image[0].url)
+
 	return (
 		<div className="animate-scaleIn">
 			<div className="bg-white rounded-xl relative overflow-hidden">
@@ -22,18 +50,12 @@ const Productitem: FC<{ product: IProduct }> = ({ product }) => {
 					<DynamicFavouriteButton productId={product.id} />
 					<AddToCartButton product={product} />
 				</div>
-				{/* <Image
-					width={300}
-					height={300}
-					src={product?.images[0]}
-					alt={product.name}
-				/> */}
 				<Link href={`/product/${product.category.slug}`}>
 					<img
 						style={{ borderRadius: '10px', width: '300px', height: '300px' }}
-						// width={300}
-						// height={300}
-						src={product?.images[0]}
+						width={300}
+						height={300}
+						src={image[0]?.url === undefined ? '' : image[0]?.url}
 						alt={product.name}
 					/>
 				</Link>

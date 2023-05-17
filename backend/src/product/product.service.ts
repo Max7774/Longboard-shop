@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { convertToSlug } from 'seeder/seeds'
 import { PaginationService } from 'src/pagination/pagination.service'
 import { PrismaService } from 'src/prisma.service'
 import { EnumProductsSort, GetAllProductDto } from './dto/get-all.product.dto'
@@ -9,6 +8,7 @@ import {
 	productReturnObject,
 	productReturnObjectFull,
 } from './return-product.object'
+import { convertToSlug } from 'src/convertSlugFunc/convert'
 
 @Injectable()
 export class ProductService {
@@ -141,24 +141,26 @@ export class ProductService {
 		return products
 	}
 
-	async createProduct() {
+	async createProduct(dto: ProductDto) {
+		const { description, images, price, name, categoryId } = dto
+
 		const product = await this.prisma.product.create({
 			data: {
-				id: 2,
-				description: '',
-				images: [],
-				categoryId: 2,
-				userId: 1,
-				name: '',
-				price: 0,
-				slug: '',
+				name,
+				description,
+				slug: convertToSlug(dto.name),
+				images,
+				price,
+				categoryId,
 			},
 		})
+
 		return product.id
 	}
 
 	async updateProduct(id: number, dto: ProductDto) {
 		const { description, images, price, name, categoryId } = dto
+
 		return this.prisma.product.update({
 			where: {
 				id,

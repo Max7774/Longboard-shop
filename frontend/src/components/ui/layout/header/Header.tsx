@@ -11,12 +11,9 @@ import { useAuth } from '@/hooks/useAuth'
 
 import HeaderProfile from './HeaderProfile'
 import Cart from './cart/HeaderCart'
-import MyOrdersPage from '@/../pages/my-orders'
 
 const Header: FC = () => {
 	const { user } = useAuth()
-
-	console.log(user)
 
 	return (
 		<header
@@ -37,11 +34,11 @@ const Header: FC = () => {
 
 			<Search />
 			<div className="flex items-center justify-end gap-10">
-				{user?.isAdmin ? (
-					<div style={{ textDecoration: 'none', color: 'white' }}>
+				<div style={{ textDecoration: 'none', color: 'white' }}>
+					<Link href={'/admin'}>
 						<FiServer size={28} />
-					</div>
-				) : null}
+					</Link>
+				</div>
 				<div style={{ textDecoration: 'none', color: 'white' }}>
 					<Link href={'/my-orders'}>
 						<CiReceipt size={28} />

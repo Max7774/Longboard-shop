@@ -9,19 +9,12 @@ import Heading from '../../ui/layout/Heading'
 
 import { useAuthRedirect } from './useAuthRedirect'
 import { validEmail } from './valid-email'
+import { validPhone } from './valid-phone'
 import { useActions } from '@/../src/hooks/useAction'
-import { useAuth } from '@/../src/hooks/useAuth'
-import {
-	IEmailPassword,
-	IEmailRegPassword,
-} from '@/../src/store/user/user.interface'
-
-interface Props {}
+import { IEmailRegPassword } from '@/../src/store/user/user.interface'
 
 const Auth: FC = () => {
 	useAuthRedirect()
-
-	const { isLoading } = useAuth()
 
 	const { login, register } = useActions()
 
@@ -60,20 +53,35 @@ const Auth: FC = () => {
 							},
 						})}
 						placeholder="Email"
+						type="text"
 						error={errors.email?.message}
 					/>
 					{type === 'register' ? (
-						<Field
-							{...formRegister('name', {
-								minLength: {
-									value: 1,
-									message: 'Min length should more 6 symbols',
-								},
-							})}
-							type="name"
-							placeholder="Name"
-							error={errors.name?.message}
-						/>
+						<>
+							<Field
+								{...formRegister('name', {
+									minLength: {
+										value: 1,
+										message: 'Min length should more 6 symbols',
+									},
+								})}
+								type="text"
+								placeholder="Name"
+								error={errors.name?.message}
+							/>
+							<Field
+								{...formRegister('phone', {
+									required: 'Phone is required',
+									pattern: {
+										value: validPhone,
+										message: 'Please enter a valid phone',
+									},
+								})}
+								type="text"
+								placeholder="Phone"
+								error={errors.phone?.message}
+							/>
+						</>
 					) : null}
 					<Field
 						{...formRegister('password', {
@@ -87,13 +95,13 @@ const Auth: FC = () => {
 						placeholder="Password"
 						error={errors.password?.message}
 					/>
-					<Button type="submit" variant="orange">
+					<Button className="mt-5 ml-10" type="submit" variant="orange">
 						Let's go!
 					</Button>
 					<div>
 						<button
 							type="button"
-							className="inline-block opacity-20 mt-3 text-sm"
+							className="inline-block opacity-20 mt-5 ml-20 text-sm"
 							onClick={() => setType(type === 'login' ? 'register' : 'login')}
 						>
 							{type === 'login' ? 'Register' : 'Login'}

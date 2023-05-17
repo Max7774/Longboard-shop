@@ -3,11 +3,7 @@ import React from 'react'
 
 import Home from '../src/components/screens/home/Home'
 import { ProductService } from '../src/services/product/product.service'
-import {
-	IProduct,
-	TypePaginationProducts,
-	TypeProducts,
-} from '../src/types/product.interface'
+import { TypePaginationProducts } from '../src/types/product.interface'
 
 const HomePage: NextPage<TypePaginationProducts> = ({ length, products }) => {
 	return <Home products={products} length={length} />

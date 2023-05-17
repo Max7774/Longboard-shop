@@ -6,7 +6,7 @@ const nextConfig = {
 		APP_URL: process.env.APP_URL,
 	},
 	images: {
-		domain: ['pepperboards.com'],
+		domains: ['localhost:3000'],
 	},
 }
 

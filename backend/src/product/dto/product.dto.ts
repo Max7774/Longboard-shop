@@ -18,4 +18,6 @@ export class ProductDto implements Prisma.ProductUpdateInput {
 
 	@IsNumber()
 	categoryId: number
+
+	file?: File
 }
