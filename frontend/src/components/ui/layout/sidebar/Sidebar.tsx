@@ -1,4 +1,3 @@
-import { createNextState } from '@reduxjs/toolkit'
 import { useQuery } from '@tanstack/react-query'
 import cn from 'clsx'
 import Link from 'next/link'
@@ -6,7 +5,7 @@ import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 import { FiLogOut } from 'react-icons/fi'
 
-import Loader from '@/ui/Loader'
+import LoaderV2 from '@/ui/LoaderV2'
 
 import { useActions } from '@/hooks/useAction'
 import { useAuth } from '@/hooks/useAuth'
@@ -28,16 +27,18 @@ const Sidebar: FC = () => {
 	return (
 		<aside
 			className="bg-secondary flex flex-col justify-between"
-			style={{ height: 'calc(150vh - 91px)' }}
+			style={{
+				minHeight: '200%',
+			}}
 		>
 			<div>
 				{isLoading ? (
-					<Loader />
+					<LoaderV2 />
 				) : data ? (
 					<>
 						<div className="text-xl text-white mt-4 mb-6 ml-6">Categories:</div>
 						<ul>
-							{data.map(category => (
+							{data?.map(category => (
 								<li key={category.id}>
 									<Link
 										className={cn(

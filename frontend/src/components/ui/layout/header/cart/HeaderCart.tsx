@@ -60,7 +60,7 @@ const Cart: FC = () => {
 				)}
 			>
 				<div className="font-normal text-lg mb-5">My cart</div>
-				<div className={styles.cart}>
+				<div style={{ overflow: 'scroll' }} className={styles.cart}>
 					{items.length ? (
 						items.map(item => <CartItem item={item} key={item.id} />)
 					) : (

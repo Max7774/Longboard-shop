@@ -41,8 +41,10 @@ export class ProductController {
 		return this.productService.byCategory(categorySlug)
 	}
 
+	// @UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('create')
+	// @Auth()
 	async createProduct(@Body() dto: ProductDto) {
 		return this.productService.createProduct(dto)
 	}
@@ -58,8 +60,8 @@ export class ProductController {
 	@HttpCode(200)
 	@Delete(':id')
 	@Auth()
-	async deleteProduct(@Param('id') id: string) {
-		return this.productService.deleteProduct(+id)
+	async deleteProduct(@Param('id') id: string, @Body() fId: number[]) {
+		return this.productService.deleteProduct(+id, fId)
 	}
 
 	@Get(':id')

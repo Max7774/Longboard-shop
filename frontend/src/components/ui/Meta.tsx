@@ -35,7 +35,10 @@ const Meta: FC<PropsWithChildren<ISeo>> = ({
 						<meta property="og:locale" content="en" />
 						<meta property="og:title" content={titleMerge(title)} />
 						<meta property="og:url" content={currentUrl} />
-						{/* <meta property="og:image" content={image || 'favicon.ico'} /> */}
+						<meta
+							property="og:image"
+							content={image || 'http://localhost:3000/favicon.ico'}
+						/>
 						<meta property="og:description" content={descripton} />
 					</>
 				) : (

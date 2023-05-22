@@ -17,8 +17,12 @@ const CartActions: FC<{ item: ICartItem }> = ({ item }) => {
 		<div className="mt-3">
 			<div className="flex items-center gap-3">
 				<button
-					onClick={() => changeQuantity({ id: item.id, type: 'minus' })}
-					disabled={quantity === 1}
+					onClick={() => {
+						changeQuantity({ id: item.id, type: 'minus' })
+						if (quantity === 1) {
+							removeFromCart({ id: item.id })
+						}
+					}}
 				>
 					<FiMinus fontSize={13} />
 				</button>

@@ -20,7 +20,7 @@ const SearchPage: NextPage = () => {
 	)
 
 	return (
-		<Meta title="Поиск">
+		<Meta title="Search">
 			<Layout>
 				<Catalog
 					products={data?.products || []}

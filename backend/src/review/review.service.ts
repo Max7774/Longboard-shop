@@ -38,18 +38,21 @@ export class ReviewService {
 	// }
 
 	async getAll() {
-		return this.prisma.review.findMany({
+		const response = await this.prisma.review.findMany({
 			orderBy: {
 				createdAt: 'desc',
 			},
 			select: returnReviewObject,
 		})
+
+		return response
 	}
 
 	async createReview(userId: number, dto: ReviewDto, productId: number) {
-		return this.prisma.review.create({
+		const resonse = await this.prisma.review.create({
 			data: {
-				...dto,
+				rating: Math.floor(dto.rating),
+				text: dto.text,
 				product: {
 					connect: {
 						id: productId,
@@ -61,7 +64,10 @@ export class ReviewService {
 					},
 				},
 			},
+			select: returnReviewObject,
 		})
+
+		return resonse
 	}
 
 	// async updateReview(id: number, dto: ReviewDto) {

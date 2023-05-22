@@ -3,7 +3,7 @@ import { IReview } from '../types/review.interface'
 
 const REVIEWS = 'reviews'
 
-type DataType = {
+export type DataType = {
 	rating: number
 	text: string
 }

@@ -1,15 +1,15 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
-  return (
-    <Html lang="en">
-      <Head>
-       <link rel="icon" type="/next.svg" href="public/favicon.ico" />
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
+	return (
+		<Html lang="en">
+			<Head>
+				<link rel="icon" href="http://localhost:3000/favicon_long.ico" />
+			</Head>
+			<body>
+				<Main />
+				<NextScript />
+			</body>
+		</Html>
+	)
 }

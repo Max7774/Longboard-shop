@@ -1,5 +1,5 @@
-import Cookies from 'js-cookie'
 import { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import CatalogPagination from '@/ui/catalog/CatalogPagination'
 import Layout from '@/ui/layout/Layout'
@@ -8,19 +8,13 @@ import { useActions } from '@/hooks/useAction'
 import { useAuth } from '@/hooks/useAuth'
 
 import Meta from '../../ui/Meta'
-import Heading from '../../ui/layout/Heading'
 import Auth from '../auth/Auth'
 
-// import Catalog from '../../ui/catalog/Catalog'
-import {
-	TypePaginationProducts,
-	TypeProducts,
-} from '@/../src/types/product.interface'
+import { TypePaginationProducts } from '@/../src/types/product.interface'
 
 const Home: FC<TypePaginationProducts> = ({ products, length }) => {
 	const { user } = useAuth()
 
-	const { logout } = useActions()
 	return (
 		<Meta title="Home">
 			{!!user ? (

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { FC } from 'react'
 
 import Loader from '../Loader'
+import Back from '../back-home/BackHome'
 import { Button } from '../button/Button'
 import Heading from '../layout/Heading'
 
@@ -26,9 +27,7 @@ const Catalog: FC<ICatalog> = ({
 
 	return (
 		<section>
-			<Link href={'/'}>
-				<div className="mb-2">{'<- Back'}</div>
-			</Link>
+			<Back title="Home" />
 			{title && <Heading className="mb-5">{title}</Heading>}
 			{products.length ? (
 				<>
@@ -40,7 +39,7 @@ const Catalog: FC<ICatalog> = ({
 					{isPagination && <Button variant="orange">Load more</Button>}
 				</>
 			) : (
-				<div>There are no products</div>
+				<div>There are no products!</div>
 			)}
 		</section>
 	)

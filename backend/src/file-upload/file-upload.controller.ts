@@ -8,18 +8,21 @@ import {
 	Post,
 	UploadedFile,
 	UseInterceptors,
+	UsePipes,
+	ValidationPipe,
 } from '@nestjs/common'
 import { FileUploadService } from './file-upload.service'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { fileStorage } from './storage'
+import { Auth } from 'src/auth/decorators/auth.decorator'
 
 @Controller('file-upload')
 export class FileUploadController {
 	constructor(private readonly fileUploadService: FileUploadService) {}
 
-	// @UsePipes(new ValidationPipe())
+	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
-	// @Auth()
+	@Auth()
 	@Post('create/:id')
 	@UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
 	async createProduct(
@@ -31,16 +34,12 @@ export class FileUploadController {
 		file: Express.Multer.File,
 		@Param() id: { id: number },
 	) {
+		console.log(file, +id.id)
 		return this.fileUploadService.uploadFile(file, id)
 	}
 
 	@Get(':id')
 	async getPhoto(@Param() id: { id: number }) {
 		return this.fileUploadService.getPhoto(id)
-	}
-
-	@Get('img/:filename/:id')
-	async getImage(@Param() filename: { filename: string; id: string }) {
-		return this.fileUploadService.getImage(filename)
 	}
 }

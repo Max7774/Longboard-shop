@@ -29,6 +29,7 @@ export const AuthService = {
 			method: 'POST',
 			data,
 		})
+		console.log('response', response)
 
 		if (response.data.accessToken) saveToStorage(response.data)
 

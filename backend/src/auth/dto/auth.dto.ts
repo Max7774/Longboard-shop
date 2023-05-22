@@ -14,6 +14,7 @@ export class AuthDto {
 	@IsString()
 	password: string
 
+	@IsOptional()
 	@IsString()
 	phone: string
 }

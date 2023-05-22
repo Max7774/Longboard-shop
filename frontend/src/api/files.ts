@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { getAccessToken } from '@/services/auth/auth.helper'
+
 export function convertToSlug(string: string) {
 	const a =
 		'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
@@ -26,37 +28,30 @@ export interface FileItem {
 	mimetype: string
 }
 
-export const uploadFile = async (
-	options: any,
-	state: string,
-	productID: number,
-) => {
+export const uploadFile = async (options: any, productID: number) => {
 	const { onSuccess, onError, file, onProgress } = options
 
-	console.log(file)
+	const accessToken = getAccessToken()
 
 	const formData = new FormData()
 	formData.append('file', file)
 
 	const config = {
-		headers: { 'Content-Type': 'multipart/form-data' },
+		headers: {
+			'Content-Type': 'multipart/form-data',
+			Authorization: `Bearer ${accessToken}`,
+		},
 		onProgress: (event: ProgressEvent) => {
 			onProgress({ percent: (event.loaded / event.total) * 100 })
 		},
 	}
 
-	const slug = convertToSlug(state)
-
-	console.log('SLUG===>', slug)
-
 	try {
 		const { data } = await axios.post(
-			`http://localhost:4200/api/file-upload/create/${productID}`,
+			`${process.env.SERVER_URL}/file-upload/create/${productID}`,
 			formData,
 			config,
 		)
-
-		console.log('DATA!!!!', data)
 
 		onSuccess()
 

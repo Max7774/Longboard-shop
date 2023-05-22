@@ -42,13 +42,22 @@ export const ProductService = {
 	},
 
 	async createProduct(data: ProductType) {
-		const response = await axiosClassic<IProduct>({
-			url: `${PRODUCTS}/create`,
-			method: 'POST',
-			data,
-		})
+		try {
+			const response = await instance<IProduct>({
+				url: `${PRODUCTS}/create`,
+				method: 'POST',
+				data,
+			})
 
-		return response
+			if (response.status !== 200) {
+				throw new Error('Failed to create product!')
+			}
+
+			return response.data
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to create product!')
+		}
 	},
 
 	async updateProduct(id: string | number, data: ProductType) {
@@ -59,10 +68,16 @@ export const ProductService = {
 		})
 	},
 
-	async deleteProduct(id: string | number) {
-		return await instance<IProduct>({
-			url: `${PRODUCTS}/${id}`,
-			method: 'DELETE',
-		})
+	async deleteProduct(id: string | number, fId: number[]) {
+		try {
+			return await instance<IProduct>({
+				url: `${PRODUCTS}/${id}`,
+				method: 'DELETE',
+				data: fId,
+			})
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to delete product')
+		}
 	},
 }

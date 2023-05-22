@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { PaginationService } from 'src/pagination/pagination.service'
@@ -42,10 +43,14 @@ export class ProductService {
 									mode: 'insensitive',
 								},
 							},
+						},
+						{
 							name: {
 								contains: searchTerm,
 								mode: 'insensitive',
 							},
+						},
+						{
 							description: {
 								contains: searchTerm,
 								mode: 'insensitive',
@@ -151,11 +156,11 @@ export class ProductService {
 				slug: convertToSlug(dto.name),
 				images,
 				price,
-				categoryId,
+				categoryId: +categoryId,
 			},
 		})
 
-		return product.id
+		return product
 	}
 
 	async updateProduct(id: number, dto: ProductDto) {
@@ -180,11 +185,41 @@ export class ProductService {
 		})
 	}
 
-	async deleteProduct(id: number) {
-		return this.prisma.product.delete({
-			where: {
-				id,
-			},
-		})
+	async deleteProduct(id: number, fId: number[]) {
+		try {
+			console.log('id==>', id, 'fId===>', fId)
+			const deletedProduct = await this.prisma.$transaction(async prisma => {
+				await prisma.photoFile.deleteMany({
+					where: {
+						id: { in: fId },
+					},
+				})
+
+				const deletedProduct = await prisma.product.deleteMany({
+					where: { id: { equals: id } },
+				})
+				return deletedProduct
+			})
+
+			console.log('deletedProduct', deletedProduct)
+
+			return deletedProduct
+		} catch (error) {
+			console.error('Failed to delete product:', error)
+			throw error
+		}
 	}
 }
+
+// await this.prisma.photoFile.deleteMany({
+// 	where: {
+// 		id: { in: fId },
+// 	},
+// })
+
+// await this.prisma.product.delete({
+// 	where: {
+// 		id,
+// 	},
+// })
+//!

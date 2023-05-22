@@ -18,8 +18,7 @@ export class FileUploadService {
 	async uploadFile(file: Express.Multer.File, productId: { id: number }) {
 		const { filename, mimetype, originalname, size, path } = file
 
-		console.log(filename)
-		const url = `http://localhost:3000/${filename}`
+		const url = `${process.env.CLIENT_SERVER_URL}/${filename}`
 
 		const result = await this.prismaFileService.photoFile.create({
 			data: {
@@ -29,21 +28,39 @@ export class FileUploadService {
 				originalname,
 				size,
 				path,
-				productId: Number(productId.id),
+				productId: +productId.id,
 			},
 		})
+
+		const photo = await this.prismaFileService.photoFile.findMany({
+			where: {
+				productId: +productId,
+			},
+			select: {
+				filename: true,
+			},
+		})
+
+		console.log(photo)
+
+		const images = await this.prismaFileService.product.findMany({
+			where: {
+				id: +productId,
+			},
+			select: {
+				images: true,
+			},
+		})
+
+		// return await this.prismaFileService.product.update({
+		// 	where: {
+		// 		id: +productId,
+		// 	},
+		// 	data: {
+		// 		images: [...photo],
+		// 	},
+		// })
 
 		return result
-	}
-
-	async getImage(filename: { filename: string; id: string }) {
-		console.log('filename', filename)
-		const response = await this.prismaFileService.photoFile.findUnique({
-			where: {
-				productId: Number(filename.id),
-			},
-		})
-
-		return response.path
 	}
 }

@@ -6,7 +6,12 @@ const nextConfig = {
 		APP_URL: process.env.APP_URL,
 	},
 	images: {
-		domains: ['localhost:3000'],
+		domains: [
+			'localhost:3000',
+			'localhost',
+			'cloudflare-ipfs.com',
+			'195.24.67.180',
+		],
 	},
 }
 
