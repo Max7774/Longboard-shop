@@ -1,27 +1,32 @@
 import { uploadFile } from '@/api/files'
 import { UploadOutlined } from '@ant-design/icons'
 import { Button, Upload, UploadFile } from 'antd'
-import React, { Dispatch, FC, useState } from 'react'
+import React, { Dispatch } from 'react'
 import Add from './Add'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { useQuery } from '@tanstack/react-query'
+import { ProductService } from '@/services/product/product.service'
+import { IProduct } from '@/types/product.interface'
 
 
 interface UploadFileProps {
-	productID: number
 	setPart: Dispatch<React.SetStateAction<number>>
+	slug: string
+	products: IProduct[]
 }
 
-const UploadFile = ({ productID, setPart }: UploadFileProps): JSX.Element => {
+const UploadFile = ({ setPart, slug, products }: UploadFileProps): JSX.Element => {
 	const [fileList, setFileList] = React.useState<UploadFile[]>([])
 
-	const productsArray = useTypedSelector(store => store.products.products)
+	const { data: response } = useQuery(['get products by slug'], () => ProductService.getBySlug(slug))
 
-	console.log('State', productsArray)
+	console.log(products)
 
 	const onUploadSuccess = async (options: any) => {
-		uploadFile(options, +productID)
-		if (fileList.length > 3) {
-			setPart(prev => prev - 1)
+		if (response !== undefined) {
+			uploadFile(options, +response?.data?.id)
+			if (fileList.length > 3) {
+				setPart(prev => prev - 1)
+			}
 		}
 	}
 	return (

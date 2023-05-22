@@ -94,18 +94,23 @@ export class ProductService {
 	}
 
 	async bySlug(slug: string) {
-		const product = await this.prisma.product.findUnique({
-			where: {
-				slug,
-			},
-			select: productReturnObjectFull,
-		})
+		try {
+			const product = await this.prisma.product.findUnique({
+				where: {
+					slug,
+				},
+				select: productReturnObjectFull,
+			})
 
-		if (!product) {
-			throw new NotFoundException('Product not found')
+			if (!product) {
+				throw new NotFoundException('Product not found')
+			}
+
+			return product
+		} catch (error) {
+			console.error('Failed to delete product:', error)
+			throw error
 		}
-
-		return product
 	}
 
 	async byCategory(categorySlug: string) {
@@ -185,16 +190,10 @@ export class ProductService {
 		})
 	}
 
-	async deleteProduct(id: number, fId: number[]) {
+	async deleteProduct(id: number) {
 		try {
-			console.log('id==>', id, 'fId===>', fId)
+			console.log('id==>', id)
 			const deletedProduct = await this.prisma.$transaction(async prisma => {
-				await prisma.photoFile.deleteMany({
-					where: {
-						id: { in: fId },
-					},
-				})
-
 				const deletedProduct = await prisma.product.deleteMany({
 					where: { id: { equals: id } },
 				})

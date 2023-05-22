@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 
 import { useAuth } from '@/hooks/useAuth'
 
@@ -34,23 +34,7 @@ const Productitem: FC<{
 	product: IProduct
 	removeProductFromState?: (productId: number) => void
 }> = ({ product, removeProductFromState }) => {
-	const [image, setImage] = useState<Photo[]>([])
-
 	const { user } = useAuth()
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch(
-				`${process.env.SERVER_URL}/file-upload/${product.id}`,
-			)
-			const data = await response.json()
-			setImage(data)
-		}
-
-		fetchData()
-	}, [])
-
-	const imageUrl = image?.[0]?.url || `/${image[0]?.originalname}`
 
 	const imageStyles = {
 		width: '100%',
@@ -65,14 +49,13 @@ const Productitem: FC<{
 						<DynamicDeleteButton
 							removeProductFromState={removeProductFromState}
 							productId={product.id}
-							image={image}
 						/>
 					) : null}
 					<DynamicFavouriteButton productId={product.id} />
 					<AddToCartButton product={product} />
 				</div>
 				<Link href={`/product/${product.slug}`}>
-					{image?.length === 0 ? (
+					{product?.images?.length === 0 ? (
 						<Image
 							src={'/noimage.png'}
 							width={300}
@@ -83,7 +66,7 @@ const Productitem: FC<{
 						/>
 					) : (
 						<Image
-							src={image[0].filename}
+							src={`/${product?.images[0]}`}
 							width={500}
 							height={500}
 							alt={product.name}

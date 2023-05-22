@@ -6,6 +6,7 @@ import Layout from '@/ui/layout/Layout'
 
 import { useActions } from '@/hooks/useAction'
 import { useAuth } from '@/hooks/useAuth'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 import Meta from '../../ui/Meta'
 import Auth from '../auth/Auth'

@@ -17,27 +17,13 @@ interface IItem {
 }
 
 const CartItem: FC<IItem> = ({ item }) => {
-	const [image, setImage] = useState<Photo[]>([])
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch(
-				`${process.env.SERVER_URL}/file-upload/${item.product.id}`,
-			)
-			const data = await response.json()
-			setImage(data)
-		}
-
-		fetchData()
-	}, [])
-
 	return (
 		<div className={styles.item}>
 			<Link href={`/product/${item.product?.category?.slug}`}>
 				<Image
 					width={100}
 					height={250}
-					src={image[0]?.url}
+					src={`/${item.product.images[0]}`}
 					alt={item.product.name}
 				/>
 			</Link>

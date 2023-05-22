@@ -13,13 +13,13 @@ import storage from 'redux-persist/lib/storage'
 
 import { carouselSlice } from './carousel/carousel.slice'
 import { cartSlice } from './cart/cart.slice'
-import { productSlice } from './product/product.slice'
+import { productSlice } from './product/products.slice'
 import { userSlice } from './user/user.slice'
 
 const persistConfig = {
 	key: 'LongBoard-shop',
 	storage,
-	whitelist: ['cart'],
+	whitelist: ['cart, products'],
 }
 
 const rootReducer = combineReducers({

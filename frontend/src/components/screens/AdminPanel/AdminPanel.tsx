@@ -1,17 +1,17 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import cn from 'clsx'
-import React, { FC, memo, useEffect, useState } from 'react'
+import React, { FC, memo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
 
 import Back from '@/ui/back-home/BackHome'
 
-import { useAppSelector } from '@/hooks/dispatch'
 import { useActions } from '@/hooks/useAction'
 import { useAuth } from '@/hooks/useAuth'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 import { IProduct } from '@/types/product.interface'
+
+import { convertToSlug } from '@/api/files'
 
 import Meta from '../../ui/Meta'
 import { Button } from '../../ui/button/Button'
@@ -26,12 +26,11 @@ import { ProductService } from '@/services/product/product.service'
 import { ProductType } from '@/services/product/product.types'
 
 const AdminPanel: FC<{ products: IProduct[] }> = ({ products }) => {
-	const [productID, setProductID] = useState<number>(0)
 	const [part, setPart] = useState<number>(0)
+	const [slug, setSlug] = useState<string>('')
 
 	const { create } = useActions()
 	const { user } = useAuth()
-	// console.log(products)
 
 	const {
 		register,
@@ -41,14 +40,9 @@ const AdminPanel: FC<{ products: IProduct[] }> = ({ products }) => {
 	} = useForm<ProductType>({ mode: 'onChange' })
 
 	const onSubmit: SubmitHandler<ProductType> = async data => {
-		console.log(data)
-		const response = create(data)
-
-		console.log(response)
-
-		setProductID(data.categoryId)
+		create(data)
 		setPart(prev => prev + 1)
-
+		setSlug(convertToSlug(data.name))
 		reset()
 	}
 
@@ -57,6 +51,8 @@ const AdminPanel: FC<{ products: IProduct[] }> = ({ products }) => {
 		() => CategoryService.getAll(),
 		{ select: ({ data }) => data },
 	)
+
+	console.log(products)
 
 	return (
 		<>
@@ -97,11 +93,9 @@ const AdminPanel: FC<{ products: IProduct[] }> = ({ products }) => {
 												Выберите категорию
 											</option>
 											{data?.map(el => (
-												<>
-													<option key={el.id} value={el.id}>
-														{el.name}
-													</option>
-												</>
+												<option key={el.id} value={el.id}>
+													{el.name}
+												</option>
 											))}
 										</select>
 										<Button className="mt-5" type="submit" variant="orange">
@@ -110,9 +104,7 @@ const AdminPanel: FC<{ products: IProduct[] }> = ({ products }) => {
 									</form>
 								</>
 							) : null}
-							{part === 1 ? (
-								<UploadFile productID={productID} setPart={setPart} />
-							) : null}
+							{part === 1 ? <UploadFile products={products} slug={slug} setPart={setPart} /> : null}
 						</section>
 					</Layout>
 				) : (

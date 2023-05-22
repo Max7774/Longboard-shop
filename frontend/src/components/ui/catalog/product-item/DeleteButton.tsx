@@ -4,22 +4,16 @@ import { RiDeleteBin4Fill } from 'react-icons/ri'
 
 import { useProfile } from '@/hooks/useProfile'
 
-import { Photo } from './Productitem'
 import { ProductService } from '@/services/product/product.service'
 
 const DeleteButton: FC<{
 	productId: number
-	image: Photo[]
 	removeProductFromState?: (productId: number) => void
-}> = ({ productId, image, removeProductFromState }) => {
+}> = ({ productId, removeProductFromState }) => {
 	const { profile } = useProfile()
 
-	const photoId = image
-		.filter(img => Number(img.productId) === productId)
-		.map(el => Number(el.id))
-
 	const deleteMutation = useMutation(['delete product'], () =>
-		ProductService.deleteProduct(productId, photoId),
+		ProductService.deleteProduct(productId),
 	)
 
 	const handleDeleteClick = () => {

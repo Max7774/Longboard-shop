@@ -19,21 +19,16 @@
 // }
 // export default HomePage
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useActions } from '@/hooks/useAction'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 import Home from '../src/components/screens/home/Home'
 import { ProductService } from '../src/services/product/product.service'
 import { TypePaginationProducts } from '../src/types/product.interface'
 
 const HomePage: NextPage<TypePaginationProducts> = ({ length, products }) => {
-	const { getProducts } = useActions()
-
-	useEffect(() => {
-		getProducts(products)
-	}, [])
-
 	return <Home products={products} length={length} />
 }
 

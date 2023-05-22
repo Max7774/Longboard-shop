@@ -34,32 +34,21 @@ export class FileUploadService {
 
 		const photo = await this.prismaFileService.photoFile.findMany({
 			where: {
-				productId: +productId,
+				productId: +productId.id,
 			},
 			select: {
 				filename: true,
 			},
 		})
 
-		console.log(photo)
-
-		const images = await this.prismaFileService.product.findMany({
+		await this.prismaFileService.product.update({
 			where: {
-				id: +productId,
+				id: +productId.id,
 			},
-			select: {
-				images: true,
+			data: {
+				images: photo.map(el => el.filename),
 			},
 		})
-
-		// return await this.prismaFileService.product.update({
-		// 	where: {
-		// 		id: +productId,
-		// 	},
-		// 	data: {
-		// 		images: [...photo],
-		// 	},
-		// })
 
 		return result
 	}

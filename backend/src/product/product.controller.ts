@@ -60,8 +60,8 @@ export class ProductController {
 	@HttpCode(200)
 	@Delete(':id')
 	@Auth()
-	async deleteProduct(@Param('id') id: string, @Body() fId: number[]) {
-		return this.productService.deleteProduct(+id, fId)
+	async deleteProduct(@Param('id') id: string) {
+		return this.productService.deleteProduct(+id)
 	}
 
 	@Get(':id')

@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
 import { GetStaticProps, NextPage } from 'next'
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
+import { useAppDispatch } from '@/hooks/dispatch'
 import { useActions } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 
@@ -10,21 +11,16 @@ import { TypePaginationProducts } from '@/types/product.interface'
 import AdminPanel from '@/screens/AdminPanel/AdminPanel'
 import { ProductService } from '@/services/product/product.service'
 
-const Admin: NextPage = () => {
-	const productsQuery = useQuery<TypePaginationProducts>(['get products'], () =>
-		ProductService.getAll(),
-	)
-	const { getProducts } = useActions()
-
-	const products = useTypedSelector(store => store.products.products)
+const Admin: NextPage<TypePaginationProducts> = ({ products }) => {
+	const { getProductsAll } = useActions()
 
 	useEffect(() => {
-		if (productsQuery.data) {
-			getProducts(productsQuery.data.products) // используйте productsQuery.data
-		}
-	}, [productsQuery.data]) // измените зависимость на productsQuery.data
+		getProductsAll()
+	}, [])
 
-	return <AdminPanel products={products} />
+	const productAll = useTypedSelector(store => store.products)
+
+	return <AdminPanel products={productAll} />
 }
 
 export const getStaticProps: GetStaticProps<

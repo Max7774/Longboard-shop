@@ -68,12 +68,11 @@ export const ProductService = {
 		})
 	},
 
-	async deleteProduct(id: string | number, fId: number[]) {
+	async deleteProduct(id: string | number) {
 		try {
 			return await instance<IProduct>({
 				url: `${PRODUCTS}/${id}`,
 				method: 'DELETE',
-				data: fId,
 			})
 		} catch (error) {
 			console.error(error)
