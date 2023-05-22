@@ -19,8 +19,6 @@ const UploadFile = ({ setPart, slug, products }: UploadFileProps): JSX.Element =
 
 	const { data: response } = useQuery(['get products by slug'], () => ProductService.getBySlug(slug))
 
-	console.log(products)
-
 	const onUploadSuccess = async (options: any) => {
 		if (response !== undefined) {
 			uploadFile(options, +response?.data?.id)
