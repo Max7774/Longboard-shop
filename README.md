@@ -2,6 +2,8 @@
 
 Longboard shop for Russian segment
 
+http://longboardshop-russia.ru/
+
 ## Available Scripts
 
 In "frontend" and "backend" directories
