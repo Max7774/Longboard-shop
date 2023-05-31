@@ -13,13 +13,15 @@ import storage from 'redux-persist/lib/storage'
 
 import { carouselSlice } from './carousel/carousel.slice'
 import { cartSlice } from './cart/cart.slice'
+import { categorySlice } from './category/category.slice'
 import { productSlice } from './product/products.slice'
+import { reviewSlice } from './review/review.slice'
 import { userSlice } from './user/user.slice'
 
 const persistConfig = {
 	key: 'LongBoard-shop',
 	storage,
-	whitelist: ['cart, products'],
+	whitelist: ['cart'],
 }
 
 const rootReducer = combineReducers({
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
 	carousel: carouselSlice.reducer,
 	user: userSlice.reducer,
 	products: productSlice.reducer,
+	reviews: reviewSlice.reducer,
+	categories: categorySlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

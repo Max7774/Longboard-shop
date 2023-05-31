@@ -10,6 +10,7 @@ const ProductRatingFull: FC<{ review: IReview }> = ({ review }) => {
 			className="rounded-lg bg-white shadow flex gap-10 p-7 my-7"
 		>
 			<Rating
+				key={review.id + 1}
 				readonly
 				initialValue={review.rating}
 				SVGstyle={{ display: 'inline-block' }}
@@ -17,8 +18,8 @@ const ProductRatingFull: FC<{ review: IReview }> = ({ review }) => {
 				allowFraction
 				transition
 			/>
-			<span>{review.text}</span>
-			<span>{review?.user?.name}</span>
+			<span key={review.id + 2}>{review.text}</span>
+			<span key={review.id + 3}>{review?.user?.name}</span>
 		</div>
 	)
 }

@@ -1,7 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { RiDeleteBin4Fill } from 'react-icons/ri'
 
+import { useAppDispatch } from '@/hooks/dispatch'
+import { useActions } from '@/hooks/useAction'
 import { useProfile } from '@/hooks/useProfile'
 
 import { ProductService } from '@/services/product/product.service'
@@ -11,6 +13,8 @@ const DeleteButton: FC<{
 	removeProductFromState?: (productId: number) => void
 }> = ({ productId, removeProductFromState }) => {
 	const { profile } = useProfile()
+	const dispatch = useAppDispatch()
+	const { removeProduct } = useActions()
 
 	const deleteMutation = useMutation(['delete product'], () =>
 		ProductService.deleteProduct(productId),
@@ -18,9 +22,7 @@ const DeleteButton: FC<{
 
 	const handleDeleteClick = () => {
 		deleteMutation.mutateAsync()
-		if (removeProductFromState) {
-			removeProductFromState(productId)
-		}
+		dispatch(removeProduct(productId))
 	}
 
 	if (!profile) return null

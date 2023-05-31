@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import CatalogPagination from '@/ui/catalog/CatalogPagination'
@@ -16,12 +16,21 @@ import { TypePaginationProducts } from '@/../src/types/product.interface'
 const Home: FC<TypePaginationProducts> = ({ products, length }) => {
 	const { user } = useAuth()
 
+	// console.log(products)
+
+	const { getProducts } = useActions()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(getProducts(products))
+	}, [])
+
 	return (
 		<Meta title="Home">
 			{!!user ? (
 				<Layout>
 					<CatalogPagination
-						title="Freshed products"
+						title="Свежие товары"
 						data={{ products, length }}
 					/>
 				</Layout>

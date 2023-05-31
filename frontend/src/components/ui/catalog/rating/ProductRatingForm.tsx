@@ -5,6 +5,8 @@ import { Rating } from 'react-simple-star-rating'
 import { Button } from '@/ui/button/Button'
 import Field from '@/ui/input/Field'
 
+import { useActions } from '@/hooks/useAction'
+
 import { IProduct } from '@/types/product.interface'
 import { IReview } from '@/types/review.interface'
 
@@ -15,17 +17,29 @@ const ProductRatingForm: FC<{
 }> = ({ productId }) => {
 	const [ratingProd, setRatingProd] = useState<number>(0)
 	const [textReview, setTextReview] = useState<string>('')
-	const [data, setData] = useState<DataType>({ rating: 0, text: '' })
+	const [data, setData] = useState<DataType>({ rating: 0, text: '', productId })
 
-	const { mutate } = useMutation(
-		['set review'],
-		() => ReviewService.createReview(productId, data),
-		{
-			onSuccess() {
-				setData({ rating: 0, text: '' })
-			},
-		},
-	)
+	const { createReview } = useActions()
+
+	// const { mutate } = useMutation(
+	// 	['set review'],
+	// 	() => ReviewService.createReview(productId, data),
+	// 	{
+	// 		onSuccess() {
+	// 			// createReview(data)
+	// 			setTextReview('')
+	// 			setRatingProd(0)
+	// 		},
+	// 	},
+	// )
+
+	const addComment = () => {
+		setData({ rating: ratingProd, text: textReview, productId })
+		console.log('data', data)
+		createReview(data)
+		setTextReview('')
+		setRatingProd(0)
+	}
 
 	return (
 		<div>
@@ -36,7 +50,7 @@ const ProductRatingForm: FC<{
 			/>
 			<span className="mr-1">
 				<Rating
-					initialValue={0}
+					initialValue={ratingProd}
 					SVGstyle={{ display: 'inline-block' }}
 					size={50}
 					allowFraction
@@ -49,8 +63,7 @@ const ProductRatingForm: FC<{
 				variant="orange"
 				type="button"
 				onClick={() => {
-					setData({ rating: ratingProd, text: textReview })
-					mutate()
+					addComment()
 				}}
 				className="flex"
 			>

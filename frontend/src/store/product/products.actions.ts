@@ -2,36 +2,58 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { IProduct, TypePaginationProducts } from '@/types/product.interface'
 
-import { productSlice } from './products.slice'
+import { AsyncThunkConfig } from '@/utils/asyncThunkConfig'
+
+import { FileService } from '@/services/file.service'
 import { ProductService } from '@/services/product/product.service'
-import { ProductType } from '@/services/product/product.types'
+import { EnumProductsSort, ProductType } from '@/services/product/product.types'
 
-export interface AsyncThunkConfig {
-	rejectValue: { errorMessage: string }
-}
-
-export const getProductsAll = createAsyncThunk(
-	'products/getProducts',
-	async (_, { rejectWithValue, dispatch }) => {
-		try {
-			const response = await ProductService.getAll()
-			dispatch(productSlice.actions.getProducts(response.products))
-			return response.products
-		} catch (error) {
-			return rejectWithValue({
-				errorMessage: 'Failed to fetch product by id',
-			})
-		}
+export const getProductsAll = createAsyncThunk<
+	TypePaginationProducts,
+	{
+		page: string | number | undefined
+		perPage: string | number | undefined
+		sort: EnumProductsSort
 	},
-)
+	AsyncThunkConfig
+>('products/getProducts', async (data, thunkApi) => {
+	try {
+		const response = await ProductService.getAll(data)
+		return response
+	} catch (error) {
+		return thunkApi.rejectWithValue({
+			errorMessage: 'Failed to fetch product by id',
+		})
+	}
+})
+
+// export const getProductsByCategory = createAsyncThunk(
+// 	'products/categriy',
+// 	async (data, thunkApi) => {
+// 		try {
+// 			const response = await ProductService.getByCategory()
+
+// 			return response
+// 		} catch (error) {
+// 			return thunkApi.rejectWithValue({
+// 				errorMessage: 'Failed to fetch product by id',
+// 			})
+// 		}
+// 	},
+// )
 
 export const create = createAsyncThunk<IProduct, ProductType, AsyncThunkConfig>(
 	'products/createProduct',
 	async (data, thunkApi) => {
 		try {
-			const product = await ProductService.createProduct(data)
+			const product = await ProductService.createProduct({
+				name: data.name,
+				price: data.price,
+				description: data.description,
+				categoryId: data.categoryId,
+			})
 
-			console.log(product)
+			await FileService.uploadFile(data.file, product.id)
 
 			return product
 		} catch (error) {

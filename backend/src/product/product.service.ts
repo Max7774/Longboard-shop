@@ -120,6 +120,7 @@ export class ProductService {
 					slug: categorySlug,
 				},
 			},
+			select: productReturnObjectFull,
 		})
 
 		if (!products) throw new NotFoundException('Products not found')
@@ -197,10 +198,13 @@ export class ProductService {
 				const deletedProduct = await prisma.product.deleteMany({
 					where: { id: { equals: id } },
 				})
+				await prisma.review.deleteMany({
+					where: {
+						productId: id,
+					},
+				})
 				return deletedProduct
 			})
-
-			console.log('deletedProduct', deletedProduct)
 
 			return deletedProduct
 		} catch (error) {

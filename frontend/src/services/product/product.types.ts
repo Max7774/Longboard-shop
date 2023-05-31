@@ -10,6 +10,7 @@ export type ProductType = {
 	description?: string
 	images?: string[]
 	categoryId: number
+	file?: any
 }
 
 export type TypeProductDataFilters = {

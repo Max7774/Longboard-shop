@@ -5,7 +5,7 @@ import * as express from 'express'
 import { join } from 'path'
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
+	const app = await NestFactory.create(AppModule, { cors: false })
 
 	const prismaService = app.get(PrismaService)
 	await prismaService.enableShutdownHooks(app)
@@ -13,7 +13,7 @@ async function bootstrap() {
 	app.use('../uploads', express.static(join(__dirname, '..', 'uploads')))
 
 	app.setGlobalPrefix('api')
-	app.enableCors()
+	app.enableCors({ credentials: true, origin: true })
 	await app.listen(4200)
 }
 bootstrap()

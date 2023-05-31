@@ -16,40 +16,41 @@ export class FileUploadService {
 	}
 
 	async uploadFile(file: Express.Multer.File, productId: { id: number }) {
-		const { filename, mimetype, originalname, size, path } = file
+		// for (let i = 0; i <= file.length; i += 1) {
+			const { filename, mimetype, originalname, size, path } = file
+			const url = `${process.env.CLIENT_SERVER_URL}/${filename}`
 
-		const url = `${process.env.CLIENT_SERVER_URL}/${filename}`
+			const result = await this.prismaFileService.photoFile.create({
+				data: {
+					url,
+					filename,
+					mimetype,
+					originalname,
+					size,
+					path,
+					productId: +productId.id,
+				},
+			})
 
-		const result = await this.prismaFileService.photoFile.create({
-			data: {
-				url,
-				filename,
-				mimetype,
-				originalname,
-				size,
-				path,
-				productId: +productId.id,
-			},
-		})
+			const photo = await this.prismaFileService.photoFile.findMany({
+				where: {
+					productId: +productId.id,
+				},
+				select: {
+					filename: true,
+				},
+			})
 
-		const photo = await this.prismaFileService.photoFile.findMany({
-			where: {
-				productId: +productId.id,
-			},
-			select: {
-				filename: true,
-			},
-		})
+			await this.prismaFileService.product.update({
+				where: {
+					id: +productId.id,
+				},
+				data: {
+					images: photo.map(el => el.filename),
+				},
+			})
 
-		await this.prismaFileService.product.update({
-			where: {
-				id: +productId.id,
-			},
-			data: {
-				images: photo.map(el => el.filename),
-			},
-		})
-
-		return result
+			return result
+		// }
 	}
 }

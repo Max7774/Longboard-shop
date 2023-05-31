@@ -16,8 +16,8 @@ export const register = createAsyncThunk<IAuthResponse, IEmailRegPassword>(
 		try {
 			const response = await AuthService.register('register', data)
 			return response
-		} catch (error) {
-			return thunkApi.rejectWithValue(error)
+		} catch (error: any) {
+			return thunkApi.rejectWithValue(error.response.data.message)
 		}
 	},
 )
@@ -28,8 +28,9 @@ export const login = createAsyncThunk<IAuthResponse, IEmailPassword>(
 		try {
 			const response = await AuthService.main('login', data)
 			return response
-		} catch (error) {
-			return thunkApi.rejectWithValue(error)
+		} catch (error: any) {
+			console.log(error)
+			return thunkApi.rejectWithValue(error.response.data.message)
 		}
 	},
 )

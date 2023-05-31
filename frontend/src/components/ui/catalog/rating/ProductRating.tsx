@@ -26,7 +26,7 @@ const ProductRating: FC<{ product: IProduct }> = ({ product }) => {
 					<span className="text-primary text-sm ml-1">{rating}</span>
 				</span>
 			)}
-			<span className="text-xs">({product?.reviews?.length} reviews)</span>
+			<span className="text-xs">({product?.reviews?.length} отзывов)</span>
 		</div>
 	)
 }

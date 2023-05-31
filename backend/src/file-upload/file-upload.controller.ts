@@ -34,7 +34,6 @@ export class FileUploadController {
 		file: Express.Multer.File,
 		@Param() id: { id: number },
 	) {
-		console.log(file, +id.id)
 		return this.fileUploadService.uploadFile(file, id)
 	}
 

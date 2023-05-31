@@ -13,14 +13,14 @@ const SortDropdown: FC<ISortDropdown> = ({ sortType, setSortType }) => {
 			<select
 				value={sortType}
 				onChange={e => setSortType(e.target.value as any)}
-				className="appearance-none py-1 px-2 bg-white border-gray"
+				className="rounded-xl text-center appearance-none py-1 px-2 bg-gray border-gray"
 			>
 				{(
 					Object.keys(EnumProductsSort) as Array<keyof typeof EnumProductsSort>
 				).map(key => {
 					return (
 						<option key={EnumProductsSort[key]} value={EnumProductsSort[key]}>
-							{EnumProductsSort[key]}
+							{`↓ ${EnumProductsSort[key]}`}
 						</option>
 					)
 				})}

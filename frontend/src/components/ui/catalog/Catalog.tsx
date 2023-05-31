@@ -1,12 +1,10 @@
-import Link from 'next/link'
 import React, { FC } from 'react'
 
-import Loader from '../Loader'
+import LoaderV2 from '../LoaderV2'
 import Back from '../back-home/BackHome'
 import { Button } from '../button/Button'
 import Heading from '../layout/Heading'
 
-import SortDropdown from './SortDropdown'
 import Productitem from './product-item/Productitem'
 import { IProduct } from '@/../src/types/product.interface'
 
@@ -23,13 +21,15 @@ const Catalog: FC<ICatalog> = ({
 	title,
 	isPagination = false,
 }) => {
-	if (isLoading) return <Loader />
+	console.log(products)
+
+	if (isLoading) return <LoaderV2 />
 
 	return (
 		<section>
 			<Back title="Home" />
 			{title && <Heading className="mb-5">{title}</Heading>}
-			{products.length ? (
+			{products?.length ? (
 				<>
 					<div className="grid grid-cols-4 gap-10">
 						{products?.map(product => (

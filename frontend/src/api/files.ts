@@ -55,6 +55,8 @@ export interface FileItem {
 export const uploadFile = async (options: any, productID: number) => {
 	const { onSuccess, onError, file, onProgress } = options
 
+	console.log(file)
+
 	const accessToken = getAccessToken()
 
 	const formData = new FormData()
@@ -65,9 +67,9 @@ export const uploadFile = async (options: any, productID: number) => {
 			'Content-Type': 'multipart/form-data',
 			Authorization: `Bearer ${accessToken}`,
 		},
-		onProgress: (event: ProgressEvent) => {
-			onProgress({ percent: (event.loaded / event.total) * 100 })
-		},
+		// onProgress: (event: ProgressEvent) => {
+		// 	onProgress({ percent: (event.loaded / event.total) * 100 })
+		// },
 	}
 
 	try {
@@ -77,11 +79,11 @@ export const uploadFile = async (options: any, productID: number) => {
 			config,
 		)
 
-		onSuccess()
+		// onSuccess()
 
 		return data
 	} catch (err) {
-		onError({ err })
+		// onError({ err })
 		console.log('ERRRRROROROOR', err)
 	}
 }

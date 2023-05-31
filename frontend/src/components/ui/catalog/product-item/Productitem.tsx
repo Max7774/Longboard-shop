@@ -7,17 +7,24 @@ import { useAuth } from '@/hooks/useAuth'
 
 import { convertPrice } from '@/utils/convertPrice'
 
-import AddToCartButton from './AddToCartButton'
-import ProductRating from './ProductRating'
+import AddToCartButton from '../actions-buttons/AddToCartButton'
+import ProductRating from '../rating/ProductRating'
+
 import { IProduct } from '@/../src/types/product.interface'
 
-const DynamicFavouriteButton = dynamic(() => import('./FavouriteButton'), {
-	ssr: false,
-})
+const DynamicFavouriteButton = dynamic(
+	() => import('../actions-buttons/FavouriteButton'),
+	{
+		ssr: false,
+	},
+)
 
-const DynamicDeleteButton = dynamic(() => import('./DeleteButton'), {
-	ssr: false,
-})
+const DynamicDeleteButton = dynamic(
+	() => import('../actions-buttons/DeleteButton'),
+	{
+		ssr: false,
+	},
+)
 
 export type Photo = {
 	id: string
@@ -43,7 +50,7 @@ const Productitem: FC<{
 
 	return (
 		<div className="animate-scaleIn">
-			<div className="bg-white rounded-xl relative overflow-hidden">
+			<div className="bg-white rounded-xl relative overflow-hidden shadow hover:shadow-3xl">
 				<div className="absolute top-2 right-3 z-10">
 					{user?.isAdmin === true ? (
 						<DynamicDeleteButton
@@ -55,22 +62,24 @@ const Productitem: FC<{
 					<AddToCartButton product={product} />
 				</div>
 				<Link href={`/product/${product.slug}`}>
-					{product?.images?.length === 0 ? (
-						<Image
-							src={'/noimage.png'}
-							width={300}
-							height={300}
-							alt={product.name}
-							priority
-							style={imageStyles}
-						/>
-					) : (
-						<Image
-							src={`/${product?.images[0]}`}
+					{product.images?.length === 0 ? (
+						<img
+							src={`./noimage.png`}
 							width={500}
 							height={500}
 							alt={product.name}
-							priority
+							style={imageStyles}
+						/>
+					) : (
+						<img
+							src={`/${
+								product?.images[0] !== undefined
+									? product?.images[0]
+									: './noimage.png'
+							}`}
+							width={500}
+							height={500}
+							alt={product.name}
 							style={imageStyles}
 						/>
 					)}

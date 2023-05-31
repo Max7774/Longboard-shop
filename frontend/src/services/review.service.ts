@@ -4,6 +4,7 @@ import { IReview } from '../types/review.interface'
 const REVIEWS = 'reviews'
 
 export type DataType = {
+	productId: string | number
 	rating: number
 	text: string
 }
@@ -24,10 +25,21 @@ export const ReviewService = {
 	},
 
 	async createReview(productId: string | number, data: DataType) {
-		return await instance<IReview>({
-			url: `${REVIEWS}/leave/${productId}`,
-			method: 'POST',
-			data,
-		})
+		try {
+			const response = await instance<IReview>({
+				url: `${REVIEWS}/leave/${productId}`,
+				method: 'POST',
+				data,
+			})
+
+			if (response.status !== 200) {
+				throw new Error('Failed to create product!')
+			}
+
+			return response.data
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to create product!')
+		}
 	},
 }

@@ -31,6 +31,7 @@ export class CategoryController {
 	@Get(':id')
 	@Auth()
 	async byId(@Param('id') id: string) {
+		console.log('===>', id)
 		return this.categoryService.byId(+id)
 	}
 

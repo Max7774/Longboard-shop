@@ -9,6 +9,7 @@ export class CategoryService {
 	constructor(private prisma: PrismaService) {}
 
 	async byId(id: number) {
+		console.log(id)
 		const category = await this.prisma.category.findUnique({
 			where: {
 				id,

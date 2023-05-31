@@ -10,7 +10,8 @@ const nextConfig = {
 			'localhost:3000',
 			'localhost',
 			'cloudflare-ipfs.com',
-			'195.24.67.180',
+			'longboardshop-russia.ru',
+			'www.longboardshop-russia.ru',
 		],
 	},
 }

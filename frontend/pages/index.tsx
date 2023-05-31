@@ -19,7 +19,8 @@
 // }
 // export default HomePage
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { useActions } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'

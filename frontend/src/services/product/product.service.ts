@@ -28,7 +28,7 @@ export const ProductService = {
 	},
 
 	async getByCategory(categorySlug: string) {
-		return await axiosClassic<IProduct[]>({
+		return await instance<IProduct[]>({
 			url: `${PRODUCTS}/by-category/${categorySlug}`,
 			method: 'GET',
 		})

@@ -19,7 +19,7 @@ const Search: FC = () => {
 					className="bg-[#22303E] text-sm py-2 px-4 text-white outline-none"
 					value={searchTerm}
 					onChange={e => setSearchTerm(e.target.value)}
-					placeholder="Search..."
+					placeholder="Поиск..."
 				/>
 				<button
 					onClick={() => push(`/q?term=${searchTerm}`)}

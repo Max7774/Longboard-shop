@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { FC, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { useAppDispatch, useAppSelector } from '@/hooks/dispatch'
 import { useActions } from '@/hooks/useAction'
@@ -24,9 +25,9 @@ interface ICatalogPagination {
 
 const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 	const [page, setPage] = useState(1)
-
-	const [products, setProducts] = useState<IProduct[]>(data.products)
-
+	// const { getProductsAll } = useActions()
+	// const products = useAppSelector(store => store.products)
+	// const dispatch = useAppDispatch()
 	const [sortType, setSortType] = useState<EnumProductsSort>(
 		EnumProductsSort.NEWEST,
 	)
@@ -45,16 +46,15 @@ const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 		},
 	)
 
-	const removeProductFromState = (deletedProductId: number) => {
-		const updatedProducts = products.filter(
-			product => product.id !== deletedProductId,
-		)
-		setProducts(updatedProducts)
-	}
+	// useEffect(() => {
+	// 	const responseProd = getProductsAll({
+	// 		page,
+	// 		perPage: 4,
+	// 		sort: sortType,
+	// 	})
+	// }, [])
 
-	useEffect(() => {
-		setProducts(response.products)
-	}, [response.products])
+	// console.log(products)
 
 	const paginationLength = Math.floor(response.length / 3)
 
@@ -64,15 +64,11 @@ const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 		<section>
 			{title && <Heading className="mb-5">{title}</Heading>}
 			<SortDropdown sortType={sortType} setSortType={setSortType} />
-			{products?.length ? (
+			{response.products?.length ? (
 				<>
 					<div className="grid grid-cols-4 gap-10">
-						{products?.map(product => (
-							<Productitem
-								key={product.id}
-								product={product}
-								removeProductFromState={removeProductFromState}
-							/>
+						{response.products?.map(product => (
+							<Productitem key={product.id} product={product} />
 						))}
 					</div>
 					<div className="text-center mb-16">

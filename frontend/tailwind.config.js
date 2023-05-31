@@ -34,6 +34,9 @@ module.exports = {
 				'8xl': '6.9rem',
 				'9xl': '9.2rem',
 			},
+			boxShadow: {
+				'3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+			},
 			keyframes: {
 				animationOpacity: {
 					from: { opacity: 0.2 },
