@@ -12,6 +12,7 @@ export class ProductDto implements Prisma.ProductUpdateInput {
 	@IsString()
 	description: string
 
+	@IsOptional()
 	@IsString({ each: true })
 	@ArrayMinSize(1)
 	images: string[]

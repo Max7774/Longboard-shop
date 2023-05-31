@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { convertToSlug } from 'seeder/seeds'
 import { PaginationService } from 'src/pagination/pagination.service'
 import { PrismaService } from 'src/prisma.service'
 import { EnumProductsSort, GetAllProductDto } from './dto/get-all.product.dto'
@@ -9,6 +9,7 @@ import {
 	productReturnObject,
 	productReturnObjectFull,
 } from './return-product.object'
+import { convertToSlug } from 'src/convertSlugFunc/convert'
 
 @Injectable()
 export class ProductService {
@@ -42,10 +43,14 @@ export class ProductService {
 									mode: 'insensitive',
 								},
 							},
+						},
+						{
 							name: {
 								contains: searchTerm,
 								mode: 'insensitive',
 							},
+						},
+						{
 							description: {
 								contains: searchTerm,
 								mode: 'insensitive',
@@ -89,18 +94,23 @@ export class ProductService {
 	}
 
 	async bySlug(slug: string) {
-		const product = await this.prisma.product.findUnique({
-			where: {
-				slug,
-			},
-			select: productReturnObjectFull,
-		})
+		try {
+			const product = await this.prisma.product.findUnique({
+				where: {
+					slug,
+				},
+				select: productReturnObjectFull,
+			})
 
-		if (!product) {
-			throw new NotFoundException('Product not found')
+			if (!product) {
+				throw new NotFoundException('Product not found')
+			}
+
+			return product
+		} catch (error) {
+			console.error('Failed to delete product:', error)
+			throw error
 		}
-
-		return product
 	}
 
 	async byCategory(categorySlug: string) {
@@ -110,6 +120,7 @@ export class ProductService {
 					slug: categorySlug,
 				},
 			},
+			select: productReturnObjectFull,
 		})
 
 		if (!products) throw new NotFoundException('Products not found')
@@ -141,24 +152,26 @@ export class ProductService {
 		return products
 	}
 
-	async createProduct() {
+	async createProduct(dto: ProductDto) {
+		const { description, images, price, name, categoryId } = dto
+
 		const product = await this.prisma.product.create({
 			data: {
-				id: 2,
-				description: '',
-				images: [],
-				categoryId: 2,
-				userId: 1,
-				name: '',
-				price: 0,
-				slug: '',
+				name,
+				description,
+				slug: convertToSlug(dto.name),
+				images,
+				price,
+				categoryId: +categoryId,
 			},
 		})
-		return product.id
+
+		return product
 	}
 
 	async updateProduct(id: number, dto: ProductDto) {
 		const { description, images, price, name, categoryId } = dto
+
 		return this.prisma.product.update({
 			where: {
 				id,
@@ -179,10 +192,37 @@ export class ProductService {
 	}
 
 	async deleteProduct(id: number) {
-		return this.prisma.product.delete({
-			where: {
-				id,
-			},
-		})
+		try {
+			console.log('id==>', id)
+			const deletedProduct = await this.prisma.$transaction(async prisma => {
+				const deletedProduct = await prisma.product.deleteMany({
+					where: { id: { equals: id } },
+				})
+				await prisma.review.deleteMany({
+					where: {
+						productId: id,
+					},
+				})
+				return deletedProduct
+			})
+
+			return deletedProduct
+		} catch (error) {
+			console.error('Failed to delete product:', error)
+			throw error
+		}
 	}
 }
+
+// await this.prisma.photoFile.deleteMany({
+// 	where: {
+// 		id: { in: fId },
+// 	},
+// })
+
+// await this.prisma.product.delete({
+// 	where: {
+// 		id,
+// 	},
+// })
+//!

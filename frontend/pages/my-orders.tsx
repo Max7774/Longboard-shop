@@ -24,7 +24,7 @@ const MyOrdersPage: NextPageAuth = () => {
 				<Link href={'/'}>
 					<div className="mb-2">{'<- Back'}</div>
 				</Link>
-				<Heading>My orders</Heading>
+				<Heading>Мои заказы</Heading>
 
 				<section>
 					{orders?.length ? (

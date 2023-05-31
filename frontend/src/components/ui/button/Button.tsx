@@ -1,6 +1,12 @@
-import { EnumProductsSort } from '@/services/product/product.types'
 import cn from 'clsx'
-import React, { ButtonHTMLAttributes, FC, PropsWithChildren, useState } from 'react'
+import React, {
+	ButtonHTMLAttributes,
+	FC,
+	PropsWithChildren,
+	useState,
+} from 'react'
+
+import { EnumProductsSort } from '@/services/product/product.types'
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 	variant: 'orange' | 'white'
@@ -14,7 +20,6 @@ export const Button: FC<PropsWithChildren<IButton>> = ({
 	size = 'md',
 	...rest
 }) => {
-
 	return (
 		<button
 			{...rest}

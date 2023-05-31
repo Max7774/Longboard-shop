@@ -31,6 +31,7 @@ export class CategoryController {
 	@Get(':id')
 	@Auth()
 	async byId(@Param('id') id: string) {
+		console.log('===>', id)
 		return this.categoryService.byId(+id)
 	}
 
@@ -43,10 +44,9 @@ export class CategoryController {
 	}
 
 	@HttpCode(200)
-	@Auth()
 	@Post()
-	async createCategory() {
-		return this.categoryService.createCategory()
+	async createCategory(@Body() dto: CategoryDto) {
+		return this.categoryService.createCategory(dto)
 	}
 
 	@HttpCode(200)

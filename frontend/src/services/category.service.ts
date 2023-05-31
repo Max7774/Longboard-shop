@@ -1,5 +1,5 @@
 import { axiosClassic, instance } from '../api/api.interceptor'
-import { ICategory } from '../types/category.interface'
+import { CategoryType, ICategory } from '../types/category.interface'
 
 const CATEGORIES = 'categories'
 
@@ -25,11 +25,23 @@ export const CategoryService = {
 		})
 	},
 
-	async createCategory() {
-		return await instance<ICategory>({
-			url: CATEGORIES,
-			method: 'POST',
-		})
+	async createCategory(data: CategoryType) {
+		try {
+			const response = await instance<ICategory>({
+				url: CATEGORIES,
+				method: 'POST',
+				data,
+			})
+
+			if (response.status !== 200) {
+				throw new Error('Failed to create product!')
+			}
+
+			return response.data
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to create product!')
+		}
 	},
 
 	async updateCategory(id: string | number, name: string) {
@@ -41,9 +53,20 @@ export const CategoryService = {
 	},
 
 	async deleteCategory(id: string | number) {
-		return await instance<ICategory>({
-			url: `${CATEGORIES}/${id}`,
-			method: 'DELETE',
-		})
+		try {
+			const response = await instance<ICategory>({
+				url: `${CATEGORIES}/${id}`,
+				method: 'DELETE',
+			})
+
+			if (response.status !== 200) {
+				throw new Error('Failed to create product!')
+			}
+
+			return response
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to create product!')
+		}
 	},
 }

@@ -3,3 +3,7 @@ export interface ICategory {
 	name: string
 	slug: string
 }
+
+export interface CategoryType {
+	name: string
+}

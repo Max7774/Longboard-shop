@@ -3,7 +3,6 @@ import { PrismaService } from 'src/prisma.service'
 import { productReturnObject } from 'src/product/return-product.object'
 import { OrderDto } from './order.dto'
 import * as YooKassa from 'yookassa'
-import { faker } from '@faker-js/faker'
 import { PaymentStatusDto } from './payment-status.dto'
 import { EnumOrderItemStatus } from '@prisma/client'
 
@@ -65,7 +64,7 @@ export class OrderService {
 			},
 			confirmation: {
 				type: 'redirect',
-				return_url: 'http://localhost:3000/thanks',
+				return_url: `${process.env.CLIENT_SERVER_URL}/thanks`,
 			},
 			description: `Order #${order.id}`,
 		})
@@ -93,7 +92,7 @@ export class OrderService {
 
 			return true
 		}
-		
+
 		return true
 	}
 }

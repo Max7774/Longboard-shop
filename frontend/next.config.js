@@ -6,7 +6,13 @@ const nextConfig = {
 		APP_URL: process.env.APP_URL,
 	},
 	images: {
-		domain: ['pepperboards.com'],
+		domains: [
+			'localhost:3000',
+			'localhost',
+			'cloudflare-ipfs.com',
+			'longboardshop-russia.ru',
+			'www.longboardshop-russia.ru',
+		],
 	},
 }
 

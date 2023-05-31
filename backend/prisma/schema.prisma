@@ -11,17 +11,12 @@ model User {
   id         Int       @id @default(autoincrement())
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
-
   email      String    @unique
   password   String
-
-  isAdmin Boolean
-
-  name       String    @unique
+  isAdmin    Boolean
+  name       String    
   avatarPath String    @default("/uploads/default-avatar.png") @map("avatar_path")
-
   phone      String    @default("")
-
   orders     Order[]
   favourites Product[]
   reviews    Review[]
@@ -37,11 +32,26 @@ model Product {
   price       Int
   images      String[]
   categoryId  Int?        @map("category_id")
-  userId      Int?         @map("user_id")
+  userId      Int?        @map("user_id")
   orderItems  OrderItem[]
   category    Category?   @relation(fields: [categoryId], references: [id])
-  user        User?        @relation(fields: [userId], references: [id])
+  user        User?       @relation(fields: [userId], references: [id])
   reviews     Review[]
+  photoFiles  PhotoFile[]
+}
+
+model PhotoFile {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  url         String      @unique
+  filename    String
+  originalname String
+  mimetype    String
+  size        Int
+  path        String
+  productId   Int?        @map("product_id")
+  product     Product?    @relation(fields: [productId], references: [id])
 }
 
 model Category {
@@ -71,9 +81,9 @@ model Order {
   updatedAt DateTime            @updatedAt @map("updated_at")
   status    EnumOrderItemStatus @default(Pending)
   userId    Int                 @map("user_id")
+  total     Int
   user      User                @relation(fields: [userId], references: [id])
   items     OrderItem[]
-  total Int
 }
 
 model OrderItem {

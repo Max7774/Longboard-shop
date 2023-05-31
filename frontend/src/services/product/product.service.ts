@@ -28,7 +28,7 @@ export const ProductService = {
 	},
 
 	async getByCategory(categorySlug: string) {
-		return await axiosClassic<IProduct[]>({
+		return await instance<IProduct[]>({
 			url: `${PRODUCTS}/by-category/${categorySlug}`,
 			method: 'GET',
 		})
@@ -41,11 +41,23 @@ export const ProductService = {
 		})
 	},
 
-	async createProduct() {
-		return await instance<IProduct>({
-			url: PRODUCTS,
-			method: 'POST',
-		})
+	async createProduct(data: ProductType) {
+		try {
+			const response = await instance<IProduct>({
+				url: `${PRODUCTS}/create`,
+				method: 'POST',
+				data,
+			})
+
+			if (response.status !== 200) {
+				throw new Error('Failed to create product!')
+			}
+
+			return response.data
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to create product!')
+		}
 	},
 
 	async updateProduct(id: string | number, data: ProductType) {
@@ -57,9 +69,14 @@ export const ProductService = {
 	},
 
 	async deleteProduct(id: string | number) {
-		return await instance<IProduct>({
-			url: `${PRODUCTS}/${id}`,
-			method: 'DELETE',
-		})
+		try {
+			return await instance<IProduct>({
+				url: `${PRODUCTS}/${id}`,
+				method: 'DELETE',
+			})
+		} catch (error) {
+			console.error(error)
+			throw new Error('Failed to delete product')
+		}
 	},
 }

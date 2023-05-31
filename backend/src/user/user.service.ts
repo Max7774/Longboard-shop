@@ -35,6 +35,7 @@ export class UserService {
 						reviews: true,
 					},
 				},
+				orders: true,
 				...selectObject,
 			},
 		})
@@ -76,8 +77,6 @@ export class UserService {
 		if (!user) throw new NotFoundException('User not found')
 
 		const isExists = user.favourites.some(product => product.id === productId)
-
-		console.log('========-', isExists)
 
 		await this.prisma.user.update({
 			where: {

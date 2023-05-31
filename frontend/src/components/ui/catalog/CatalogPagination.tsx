@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import Loader from '../Loader'
+import { useAppDispatch, useAppSelector } from '@/hooks/dispatch'
+import { useActions } from '@/hooks/useAction'
+
+import LoaderV2 from '../LoaderV2'
 import { Button } from '../button/Button'
 import Heading from '../layout/Heading'
 
@@ -21,7 +25,9 @@ interface ICatalogPagination {
 
 const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 	const [page, setPage] = useState(1)
-
+	// const { getProductsAll } = useActions()
+	// const products = useAppSelector(store => store.products)
+	// const dispatch = useAppDispatch()
 	const [sortType, setSortType] = useState<EnumProductsSort>(
 		EnumProductsSort.NEWEST,
 	)
@@ -40,21 +46,33 @@ const CatalogPagination: FC<ICatalogPagination> = ({ data, title }) => {
 		},
 	)
 
-	if (isLoading) return <Loader />
+	// useEffect(() => {
+	// 	const responseProd = getProductsAll({
+	// 		page,
+	// 		perPage: 4,
+	// 		sort: sortType,
+	// 	})
+	// }, [])
+
+	// console.log(products)
+
+	const paginationLength = Math.floor(response.length / 3)
+
+	if (isLoading) return <LoaderV2 />
 
 	return (
 		<section>
 			{title && <Heading className="mb-5">{title}</Heading>}
 			<SortDropdown sortType={sortType} setSortType={setSortType} />
-			{response.products.length ? (
+			{response.products?.length ? (
 				<>
 					<div className="grid grid-cols-4 gap-10">
 						{response.products?.map(product => (
 							<Productitem key={product.id} product={product} />
 						))}
 					</div>
-					<div className="text-center mt-16">
-						{Array.from({ length: response.length / 3 }).map((_, index) => {
+					<div className="text-center mb-16">
+						{Array.from({ length: paginationLength }).map((_, index) => {
 							const pageNumber = index + 1
 							return (
 								<Button

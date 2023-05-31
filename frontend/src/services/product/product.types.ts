@@ -1,3 +1,5 @@
+import { File } from 'buffer'
+
 import { IProduct } from '../../types/product.interface'
 
 export const PRODUCTS = 'products'
@@ -6,8 +8,9 @@ export type ProductType = {
 	name: string
 	price: number
 	description?: string
-	images: string[]
+	images?: string[]
 	categoryId: number
+	file?: any
 }
 
 export type TypeProductDataFilters = {

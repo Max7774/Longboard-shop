@@ -2,6 +2,8 @@ import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { SubmitHandler } from 'react-hook-form'
 
+import { IEmailRegPassword } from '@/store/user/user.interface'
+
 import Meta from '../../ui/Meta'
 import { Button } from '../../ui/button/Button'
 import Field from '../../ui/input/Field'
@@ -9,23 +11,16 @@ import Heading from '../../ui/layout/Heading'
 
 import { useAuthRedirect } from './useAuthRedirect'
 import { validEmail } from './valid-email'
+import { validPhone } from './valid-phone'
 import { useActions } from '@/../src/hooks/useAction'
-import { useAuth } from '@/../src/hooks/useAuth'
-import {
-	IEmailPassword,
-	IEmailRegPassword,
-} from '@/../src/store/user/user.interface'
-
-interface Props {}
 
 const Auth: FC = () => {
 	useAuthRedirect()
 
-	const { isLoading } = useAuth()
-
 	const { login, register } = useActions()
 
 	const [type, setType] = useState<'login' | 'register'>('login')
+	const [authError, setAuthError] = useState('')
 
 	const {
 		register: formRegister,
@@ -34,17 +29,20 @@ const Auth: FC = () => {
 		reset,
 	} = useForm<IEmailRegPassword>({ mode: 'onChange' })
 
-	const onSubmit: SubmitHandler<IEmailRegPassword> = data => {
+	const onSubmit: SubmitHandler<IEmailRegPassword> = async data => {
 		if (type === 'login') {
-			login(data)
+			const response: any = await login(data)
+			setAuthError(response.payload)
 		} else if (type === 'register') {
-			register(data)
+			const response: any = await register(data)
+			console.log(response)
+			setAuthError(response.payload)
 		}
 		reset()
 	}
 
 	return (
-		<Meta title="auth">
+		<Meta title="Auth">
 			<section className="flex h-screen">
 				<form
 					onSubmit={handleSubmit(onSubmit)}
@@ -60,20 +58,35 @@ const Auth: FC = () => {
 							},
 						})}
 						placeholder="Email"
+						type="text"
 						error={errors.email?.message}
 					/>
 					{type === 'register' ? (
-						<Field
-							{...formRegister('name', {
-								minLength: {
-									value: 1,
-									message: 'Min length should more 6 symbols',
-								},
-							})}
-							type="name"
-							placeholder="Name"
-							error={errors.name?.message}
-						/>
+						<>
+							<Field
+								{...formRegister('name', {
+									minLength: {
+										value: 1,
+										message: 'Min length should more 6 symbols',
+									},
+								})}
+								type="text"
+								placeholder="Name"
+								error={errors.name?.message}
+							/>
+							<Field
+								{...formRegister('phone', {
+									required: 'Phone is required',
+									pattern: {
+										value: validPhone,
+										message: 'Please enter a valid phone',
+									},
+								})}
+								type="text"
+								placeholder="Phone"
+								error={errors.phone?.message}
+							/>
+						</>
 					) : null}
 					<Field
 						{...formRegister('password', {
@@ -87,13 +100,14 @@ const Auth: FC = () => {
 						placeholder="Password"
 						error={errors.password?.message}
 					/>
-					<Button type="submit" variant="orange">
+					<div className="flex flex-center text-red">{authError}</div>
+					<Button className="mt-5 ml-10" type="submit" variant="orange">
 						Let's go!
 					</Button>
 					<div>
 						<button
 							type="button"
-							className="inline-block opacity-20 mt-3 text-sm"
+							className="inline-block opacity-20 mt-5 ml-20 text-sm"
 							onClick={() => setType(type === 'login' ? 'register' : 'login')}
 						>
 							{type === 'login' ? 'Register' : 'Login'}

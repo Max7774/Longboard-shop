@@ -11,12 +11,9 @@ import { useAuth } from '@/hooks/useAuth'
 
 import HeaderProfile from './HeaderProfile'
 import Cart from './cart/HeaderCart'
-import MyOrdersPage from '@/../pages/my-orders'
 
 const Header: FC = () => {
 	const { user } = useAuth()
-
-	console.log(user)
 
 	return (
 		<header
@@ -26,20 +23,39 @@ const Header: FC = () => {
 			}}
 		>
 			<Link href="/">
-				<img
-					style={{ borderRadius: '20px' }}
-					width={100}
-					height={20}
-					src="https://www.creativefabrica.com/wp-content/uploads/2022/09/07/Skate-shop-emblem-vector-illustration-S-Graphics-37963343-1.jpg"
-					alt="Longboard shop"
-				/>
+				<svg height="60" width="200">
+					<text x="0" y="15" fill="white" transform="rotate(-20 110,-40)">
+						Long-shop
+					</text>
+					Sorry, your browser does not support inline SVG.
+				</svg>
+				{/* <div
+					style={{
+						borderRadius: '20px',
+						width: 250,
+						height: 90,
+						overflow: 'hidden',
+					}}
+				>
+					<Image
+						width={250}
+						height={90}
+						priority
+						src={'http://195.24.67.180/1200px-Skateboard.svg.png'}
+						alt="Longboard shop"
+						layout="responsive"
+						objectFit="conver"
+					/>
+				</div> */}
 			</Link>
 
 			<Search />
 			<div className="flex items-center justify-end gap-10">
-				{user?.isAdmin ? (
+				{user?.isAdmin === true ? (
 					<div style={{ textDecoration: 'none', color: 'white' }}>
-						<FiServer size={28} />
+						<Link href={'/admin'}>
+							<FiServer size={28} />
+						</Link>
 					</div>
 				) : null}
 				<div style={{ textDecoration: 'none', color: 'white' }}>

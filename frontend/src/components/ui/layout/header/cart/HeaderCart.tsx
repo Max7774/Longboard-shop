@@ -55,12 +55,12 @@ const Cart: FC = () => {
 			/>
 			<div
 				className={cn(
-					'absolute top-[4.2rem] w-80 -left-[12.5rem] bg-secondary rounded-xl px-5 py-3 text-sm menu z-20 text-white',
+					'absolute top-[4.2rem] w-80 h-80 overflow-auto -left-[12.5rem] bg-black rounded-xl px-5 py-3 text-sm menu z-20 text-white',
 					isShow ? 'open-menu' : 'close-menu',
 				)}
 			>
 				<div className="font-normal text-lg mb-5">My cart</div>
-				<div className={styles.cart}>
+				<div style={{ overflow: 'scroll' }} className={styles.cart}>
 					{items.length ? (
 						items.map(item => <CartItem item={item} key={item.id} />)
 					) : (

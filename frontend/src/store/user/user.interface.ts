@@ -18,6 +18,7 @@ export interface IInitialState {
 export interface IEmailRegPassword {
 	email: string
 	name: string
+	phone: string
 	password: string
 }
 

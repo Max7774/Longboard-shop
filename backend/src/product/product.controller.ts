@@ -41,12 +41,12 @@ export class ProductController {
 		return this.productService.byCategory(categorySlug)
 	}
 
-	@UsePipes(new ValidationPipe())
+	// @UsePipes(new ValidationPipe())
 	@HttpCode(200)
-	@Auth()
-	@Post()
-	async createProduct() {
-		return this.productService.createProduct()
+	@Post('create')
+	// @Auth()
+	async createProduct(@Body() dto: ProductDto) {
+		return this.productService.createProduct(dto)
 	}
 
 	@UsePipes(new ValidationPipe())
