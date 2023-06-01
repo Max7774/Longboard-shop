@@ -2,7 +2,7 @@
 
 Longboard shop for Russian segment
 
-http://longboardshop-russia.ru/
+https://longboardshop-russia.ru/
 
 ## Available Scripts
 
